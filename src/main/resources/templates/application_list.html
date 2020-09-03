@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+	crossorigin="anonymous" />
+<link th:rel="stylesheet" th:href="@{/css/datatables.css}" />
+<link th:rel="stylesheet" th:href="@{/css/style1.css}"
+	crossorigin="anonymous" />
+<title>Karnataka Govt Application</title>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<!--Nav bar-->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-warning orange">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
+				</ul>
+			</div>
+			<div>
+			<span> Logged in Region - <span th:text="${#authentication.getPrincipal().getUsername()}"></span> | </span>
+			<span style="text-decoration: underline;cursor:pointer;color:blue" onclick="triggerLogout();">Logout</span>
+			</div>
+		</nav>
+		<div class="container">
+			<table border="0" cellspacing="5" cellpadding="5">
+				<tbody>
+					<tr>
+						<td><label>Filter By Status</label></td>
+						<td><select name="statusFilter" id="statusFilter"
+								class="form-control">
+									<option selected value="">All Status</option>
+									<option value="A">Accepted</option>
+									<option value="R">Rejected</option>
+									<option value="I">In Verification</option>
+							</select></td>
+					</tr>
+				</tbody>
+			</table>
+			<table id="applicationList" class="table table-bordered table-responsive"
+				style="width: 100%">
+				<thead>
+					<tr>
+						<th>Status</th>
+						<th>Application Number</th>
+						<th>Mobile</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Applied</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>Status</th>
+						<th>Application Number</th>
+						<th>Mobile</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Applied</th>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+
+	<div class="bs-example">
+		<div class="bg-warning d-flex justify-content-between">
+			<div>&nbsp&nbspOwned And Maintained By: Karnataka State
+				co-operative Federation Ltd.,</div>
+			<div>Designed and Deveploed By: www.apito.in&nbsp&nbsp</div>
+		</div>
+	</div>
+	</div>
+
+
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/datatables.js}"></script>
+
+	<script th:inline="javascript">
+/*<![CDATA[*/
+	
+	loadDatatablePlugin();
+	
+	function loadDatatablePlugin() {
+		var regionID = [[${#authentication.getPrincipal().getUsername()}]];
+		var status = $("#statusFilter").val();
+	    $('#applicationList').DataTable({
+	        "processing": true,
+	        "serverSide": true,
+	        "ajax": {
+	            "url": "/allApplicationData?region="+regionID+"&status="+status,
+	            "type": "POST",
+	            "dataType": "json",
+	            "contentType": "application/json",
+	            "data": function (d) {
+	                return JSON.stringify(d);
+	            }
+	        },
+	        "columns": [
+	        	{"data": "applicationStatus", "width": "15%",
+	            	"render": function ( data, type, row, meta ) {
+	            	      return applyStatusIcon(data);
+	            	    }},
+	            {"data": "applicantNumber", "width": "20%",
+	            	"render": function ( data, type, row, meta ) {
+	            	      return '<span onclick=viewApp('+data+') style="text-decoration: underline;cursor:pointer;color:blue">'+data+'</span>';
+	            	    }},
+	            {"data": "mobile","width": "20%"},
+	            {"data": "name", "width": "15%"},
+	            {"data": "email", "width": "10%"},
+	            {"data": "creationDate", "width": "25%"}
+	        ]
+	    });
+	}
+	
+    $("#statusFilter").change(function() {
+    	$("#applicationList").dataTable().fnDestroy();
+    	loadDatatablePlugin();
+    });
+    
+    function viewApp(data){
+    	 window.location.href = "/admin/viewAppData?applicantNumber="+data;
+    }
+    
+    function applyStatusIcon(data) {
+    	let icons = '';
+    	if(data == 'I') {
+    		icons = '<span class="verificationCSS" style="color: #736820;" title="Application is in verification">In Verification</span>';
+    	} else if(data == 'R') {
+    		icons = '<span class="rejectedCSS" style="color: red;" title="Application is Rejected">Rejected</span>';
+    	} else if(data == 'A') {
+    		icons = '<span class="acceptedCSS" style="color: green;" title="Application is Accepted">Accepted</span>';
+    	}
+    	return icons;
+    }
+   
+    function triggerLogout() {
+    	window.location.href = "/admin/logout";
+    }
+    
+    /*]]>*/
+    </script>
+</body>
+</html>

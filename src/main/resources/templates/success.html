@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+	crossorigin="anonymous" />
+<link th:rel="stylesheet" th:href="@{/css/style1.css}"
+	crossorigin="anonymous" />
+<title>Karnataka State co-operative Federation Ltd.</title>
+<link rel="icon" th:href="@{img/logo1.jpg}" type="image/x-icon">
+</head>
+
+<body>
+	<div class="container-fluid">
+		<!--header and Nav bar here-->
+		<div id="headerId"></div>
+		<div class="row">
+			<!--Left panel-->
+			<div class="col-md-2 custLeftDivMD">
+				<fieldset class="border">
+					<legend class='text-left'>Downloads</legend>
+					<div id="leftId"></div>
+				</fieldset>
+			</div>
+
+			<div class="col-md-8 custCentDivMD overflow-auto">
+				<div id="genraInfo">
+					<fieldset class="border">
+						<legend class='text-left'>Application Id :<span th:text ="${applicationNumber}"></span></legend>
+						<legend class='text-left'>Status :<span th:text ="${applicationStatus}"></span></legend>
+						<legend class='text-left'><span onclick="triggerPayment1();">Payment 1</span></legend>
+						<legend class='text-left'><span onclick="triggerPayment2();">Payment 2</span></legend>
+					</fieldset>
+				</div>
+
+
+			</div>
+
+				<div class="col-md-2 custRightDivMD">
+				<fieldset class="border">
+					<legend class='text-left'>Help Line</legend>
+					<div id="rightId"></div>
+				</fieldset>
+			</div>
+		</div>
+		<!-- footer here-->
+		<div id="footerId"></div>
+	</div>
+	
+<script th:src="@{/js/jquery-3.5.1.min.js}" crossorigin="anonymous"></script>
+<script th:src="@{/js/popper.min.js}" crossorigin="anonymous"></script>
+<script th:src="@{/js/bootstrap.min.js}" crossorigin="anonymous"></script>
+<script th:src="@{/js/supporters.js}" crossorigin="anonymous"></script></html>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+	function triggerPayment1() {
+		 window.location.href =  "/makeFirstPayment?applicationNumber="[[${applicationNumber}]];
+	} 
+
+	function triggerPayment2() {
+		window.location.href =  "/makeFirstPayment?applicationNumber="[[${applicationNumber}]];
+	}
+   /*]]>*/
+</script>
+</body>
+
+</html>

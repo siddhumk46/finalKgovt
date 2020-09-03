@@ -1,0 +1,122 @@
+nav a{
+    color: white !important;
+    font-size: 1.2em !important;
+}
+
+.headerDiv{
+    min-height: 100px;
+    text-align: center;
+    background-color:white ;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.headerDivSmall{
+    text-align: center;
+    background-color: #666;
+    margin-top: 2%;
+}
+
+#other{
+    visibility: hidden;
+}
+.custLeftDivMD{
+    min-height: 400px;
+    text-align: left;
+    
+    margin-top: 1ch;
+}
+
+.custCentDivMD{
+   
+    min-height: 400px;
+    max-height: 600px;
+    text-align: left;
+    
+    margin-top: 1ch;
+}
+
+.custRightDivMD{
+    min-height: 400px;
+    text-align: left;
+    /* background-color:; */
+    margin-top: 1ch;
+}
+
+.fieldset{
+    background: url("https://images.pexels.com/photos/518543/pexels-photo-518543.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:cover;
+}
+ p#innerPara{padding:20px ;}
+ legend{width:200px;padding:10px 20px;}
+ 
+
+ input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.bs-example{
+    	margin: 0px;
+    }
+
+p{
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align:justify ;
+}
+
+.card {display:inline-block;} 
+
+
+.marks {
+    display: inline-flex;
+    width: 10%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  .marks:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+
+  #warning{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+
+}
+
+#popup{
+    color:black;
+    width:400px;
+    height: 300px;
+    background: blue;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 20px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
