@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kgovt.models.AdminUsers;
 import com.kgovt.models.ApplicationDetailes;
 import com.kgovt.models.PaymentDetails;
 import com.kgovt.models.PaymentDetails2;
 import com.kgovt.models.Status;
+import com.kgovt.services.AdminUsersService;
 import com.kgovt.services.ApplicationDetailesService;
 import com.kgovt.services.PaymentDetails2Service;
 import com.kgovt.services.PaymentDetailsService;
@@ -54,6 +56,9 @@ public class AppicationController extends AppConstants {
 
 	@Autowired
 	private StatusService statusService;
+	
+	@Autowired
+	private AdminUsersService adminUsersService;
 
 	private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
 
@@ -105,6 +110,16 @@ public class AppicationController extends AppConstants {
 		return "redirect:/indexFailure";
 	}
 
+	@GetMapping("/saveAdmin")
+	public String saveAdmin() {
+		AdminUsers admin =new AdminUsers();
+		admin.setPassword("admin123");
+		admin.setRegion("Dharwad");
+		admin.setRole("ROLE_ADMIN");
+		adminUsersService.saveAdmin(admin);
+		return "";
+	}
+	
 	@GetMapping("/indexFailure")
 	public String indexPage(Model model) {
 		model.addAttribute("failure", "Payment Failed");
@@ -200,6 +215,7 @@ public class AppicationController extends AppConstants {
 				model.addAttribute("error","Payment details are not retrived");
 				return "failure";
 			} else {
+				model.addAttribute("paymentDetails",paymentDetails);
 				return "payment";
 			}
 		} catch (Exception e) {
@@ -271,6 +287,7 @@ public class AppicationController extends AppConstants {
 				model.addAttribute("error","Payment details are not retrived");
 				return "failure";
 			} else {
+				model.addAttribute("paymentDetails",paymentDetails);
 				return "payment2";
 			}
 		} catch (Exception e) {
