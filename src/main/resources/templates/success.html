@@ -30,17 +30,30 @@
 			<div class="col-md-8 custCentDivMD overflow-auto">
 				<div id="genraInfo">
 					<fieldset class="border">
-						<legend class='text-left'>Application Id :<span th:text ="${applicationNumber}"></span></legend>
-						<legend class='text-left'>Status :<span th:text ="${applicationStatus}"></span></legend>
-						<legend class='text-left'><span onclick="triggerPayment1();">Payment 1</span></legend>
-						<legend class='text-left'><span onclick="triggerPayment2();">Payment 2</span></legend>
+						<legend class='text-left'>
+							Application Id :<span th:text="${applicationNumber}"></span>
+						</legend>
+						<legend class='text-left'>
+							Status :<span th:text="${applicationStatus}"></span>
+						</legend>
+						<!-- <legend class='text-left'><span onclick="triggerPayment2();">Payment 2</span></legend> -->
+						<br />
+						<br />
+						<div
+							style="display: table-cell; vertical-align: middle; text-align: center;">
+							<button type="button" class="btn btn-primary"
+							onclick="triggerPayment1()">Payment 1</button>
+						</div>
+						<br />
+						<br />
 					</fieldset>
+
 				</div>
 
 
 			</div>
 
-				<div class="col-md-2 custRightDivMD">
+			<div class="col-md-2 custRightDivMD">
 				<fieldset class="border">
 					<legend class='text-left'>Help Line</legend>
 					<div id="rightId"></div>
@@ -50,20 +63,21 @@
 		<!-- footer here-->
 		<div id="footerId"></div>
 	</div>
-	
-<script th:src="@{/js/jquery-3.5.1.min.js}" crossorigin="anonymous"></script>
-<script th:src="@{/js/popper.min.js}" crossorigin="anonymous"></script>
-<script th:src="@{/js/bootstrap.min.js}" crossorigin="anonymous"></script>
-<script th:src="@{/js/supporters.js}" crossorigin="anonymous"></script></html>
+
+	<script th:src="@{/js/jquery-3.5.1.min.js}" crossorigin="anonymous"></script>
+	<script th:src="@{/js/popper.min.js}" crossorigin="anonymous"></script>
+	<script th:src="@{/js/bootstrap.min.js}" crossorigin="anonymous"></script>
+	<script th:src="@{/js/supporters.js}" crossorigin="anonymous"></script>
+</html>
 
 <script th:inline="javascript">
 /*<![CDATA[*/
 	function triggerPayment1() {
-		 window.location.href =  "/makeFirstPayment?applicationNumber="[[${applicationNumber}]];
+		 window.location.href =  "/makeFirstPayment?applicationNumber="+[[${applicationNumber}]];
 	} 
 
 	function triggerPayment2() {
-		window.location.href =  "/makeFirstPayment?applicationNumber="[[${applicationNumber}]];
+		window.location.href =  "/makeFirstPayment?applicationNumber="+[[${applicationNumber}]];
 	}
    /*]]>*/
 </script>

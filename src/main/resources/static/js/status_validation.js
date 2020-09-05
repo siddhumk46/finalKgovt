@@ -34,22 +34,22 @@ $(function() {
 							flag = 1;
 						}
 
-						if (document.getElementById('password').value == '' || document.getElementById('password').value == null ) {
-							document.getElementById('password').focus();
-							document.getElementById('e_password').innerHTML = "**Enter password, field cannot be blank";
-							document.getElementById('e_password').style.color = 'red';
-							flag = 1;
-						} else if (document.getElementById('password').value.length < 8) {
-							document.getElementById('e_password')
-									.focus();
-							document.getElementById('e_password').innerHTML = "**Enter a valid Mobile Number";
-							document.getElementById('e_password').style.color = 'red';
-
-							flag = 1;
-						} else {
-							document.getElementById('e_password').innerHTML = "";
-							flag = 1;
-						}
+//						if (document.getElementById('password').value == '' || document.getElementById('password').value == null ) {
+//							document.getElementById('password').focus();
+//							document.getElementById('e_password').innerHTML = "**Enter password, field cannot be blank";
+//							document.getElementById('e_password').style.color = 'red';
+//							flag = 1;
+//						} else if (document.getElementById('password').value.length < 8) {
+//							document.getElementById('e_password')
+//									.focus();
+//							document.getElementById('e_password').innerHTML = "**Enter a valid Mobile Number";
+//							document.getElementById('e_password').style.color = 'red';
+//
+//							flag = 1;
+//						} else {
+//							document.getElementById('e_password').innerHTML = "";
+//							flag = 1;
+//						}
 						if (flag == 0) {
 							console.log(document.getElementById('stat'));
 						}

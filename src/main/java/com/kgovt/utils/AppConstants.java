@@ -18,7 +18,7 @@ public class AppConstants {
 	public static final String APPLLICATION_MAPPING = "application";
 	
 	public static final String KEY = "rzp_live_iTSsQ1MOlh6wQm";
-	public static final String SECRET = "";
+	public static final String SECRET = "ANCdUkmsHT6HOh7rR1E5HSPV";
 	
 	public static final Integer PAYMENT1 = 100;
 	public static final Integer PAYMENT2 = 200;

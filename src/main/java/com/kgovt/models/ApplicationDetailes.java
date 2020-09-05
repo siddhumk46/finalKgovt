@@ -40,7 +40,7 @@ public class ApplicationDetailes implements Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "record_id")
+	@Column(name = "application_details_id")
 	private Long recordId;
 	
 	@Column(name = "address_file_name")
@@ -69,8 +69,6 @@ public class ApplicationDetailes implements Serializable, Cloneable {
 	private String email;
 	
 	private Long mobile;
-	
-	private String password;
 	
 	@Column(name = "father_name")
 	private String fatherName;

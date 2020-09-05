@@ -23,7 +23,7 @@ $(function(){
 
 	  });
 	  
-	  //test comment
+	  // test comment
 
 	  $('#puc_marks').change(function(){
 
@@ -461,7 +461,7 @@ $(function(){
 
         var today = new Date();
   var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0!
+  var mm = today.getMonth()+1; // January is 0!
   var yyyy = today.getFullYear();
    if(dd<10){
           dd='0'+dd
@@ -741,6 +741,66 @@ $('#changetabbutton9').click(function(e){
   $('#mytabs a[href="#upload"]').tab('show');
 });
 
+
+// $('#payment1').click(function(e){
+//
+// document.getElementById('content1').style.display = 'none';
+// document.getElementById('content2').style.display = 'block';
+//
+// document.getElementById('pay1').classList.add('complete');
+//
+// document.getElementById('approval').classList.remove('inactive');
+// document.getElementById('stage2').innerHTML = "Success"
+//
+//
+// });
+
+
+
+/*
+ * $('#verificationA').click(function(e){
+ * 
+ * document.getElementById('content2').style.display = 'none';
+ * document.getElementById('content3').style.display = 'block';
+ * 
+ * 
+ * document.getElementById('approval').classList.add('complete');
+ * document.getElementById('stage3').innerHTML="Accepted"
+ * 
+ * document.getElementById('pay2').classList.remove('inactive');
+ * document.getElementById('stage3').innerHTML = "Success"
+ * 
+ * 
+ * });
+ */
+
+ /* $('#verificationR').click(function(e){
+
+    document.getElementById('content2').style.display = 'none';
+    // document.getElementById('content3').style.display = 'block';
+
+    document.getElementById('approval').classList.add('reject');
+    document.getElementById('stage3').innerHTML="Rejected"
+
+    // document.getElementById('pay2').classList.remove('inactive');
+    // document.getElementById('stage3').innerHTML = "inactive"
+
+  
+  });*/
+
+/*$('#payment2').click(function(e){
+
+  document.getElementById('content2').style.display = 'none';
+  document.getElementById('content3').style.display = 'block';
+
+  document.getElementById('pay2').classList.add('complete');
+
+  // document.getElementById('pay2').classList.remove('inactive');
+  document.getElementById('stage4').innerHTML = "Success"
+
+
+});*/
+
 });
 
 
@@ -748,14 +808,14 @@ function ValidateSize(file) {
 
 	try{
     var FileSize = file.files[0].size / 1024 / 1024 / 1; // in MB
-    //console.log(file.files[0].filePath);
+    // console.log(file.files[0].filePath);
     console.log('asd');
 	}
 	catch(e){
 	}
     if (FileSize > 1) {
         alert('File size exceeds 2 MB');
-        $(file).val(''); //for clearing with Jquery
+        $(file).val(''); // for clearing with Jquery
        
        console.log('asd');
        return;
@@ -807,7 +867,7 @@ function fileValidation() {
 	    
 	  var filePath = fileInput.value; 
 
-	  // Allowing file type 
+	  // Allowing file type
 	  var allowedExtensions =  
 	/(\.pdf)$/i; 
 	    
@@ -851,7 +911,35 @@ function disableEnterKey(e){
 
 	    }
 	  }
-
+	  
+	  function payment1complete() {
+			document.getElementById('content1').style.display = 'none';
+		  document.getElementById('content2').style.display = 'block';
+		  document.getElementById('pay1').classList.add('complete');
+		  document.getElementById('approval').classList.remove('inactive');
+		  document.getElementById('stage2').innerHTML = "Success"
+			}
+	  
+	  function acceptcomplete(){
+		    document.getElementById('content2').style.display = 'none';
+		    document.getElementById('content3').style.display = 'block';
+		    document.getElementById('approval').classList.add('complete');
+		    document.getElementById('stage3').innerHTML="Accepted"
+		    document.getElementById('pay2').classList.remove('inactive');
+		    
+	  }
+	  function rejectcomplete()
+	  {
+		  	document.getElementById('content2').style.display = 'none';
+		    document.getElementById('approval').classList.add('reject');
+		    document.getElementById('stage3').innerHTML="Rejected"
+	  }
+	  function payment2complete(){
+		    document.getElementById('content3').style.display = 'none';
+		    document.getElementById('content4').style.display = 'block';
+		    document.getElementById('pay2').classList.add('complete');
+		    document.getElementById('stage4').innerHTML = "Success"
+	  }
 $('#navbarNav a').click(function(){
 	$('#navbarNav a').removeClass('activeClass');
 	$(this).addClass("activeClass");

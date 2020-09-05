@@ -18,10 +18,13 @@ public interface ApplicationDetailesRepository extends JpaRepository<Application
 	
 	long deleteByApplicantNumber(long ApplicantNumber);
 	
+	@Query(value = "SELECT a from ApplicationDetailes a join Status b on a.applicantNumber=b.applicantNumber where a.preOfCenter=?1")
 	List<ApplicationDetailes> findByPreOfCenter(String preOfCenter);
 	
-	@Query(value = "SELECT a from ApplicationDetailes a where a.preOfCenter=?1 and a.applicationStatus=?2")
+	@Query(value = "SELECT a from ApplicationDetailes a join Status b on a.applicantNumber=b.applicantNumber where a.preOfCenter=?1")
 	List<ApplicationDetailes> getByNames(String preOfCenter, String applicationStatus);
+
+	ApplicationDetailes findByMobile(Long mobile);
 	
 	
 }

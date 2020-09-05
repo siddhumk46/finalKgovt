@@ -71,6 +71,69 @@ public class AppicationController extends AppConstants {
 	public String getIndex(Model model) {
 		return "index";
 	}
+	@SuppressWarnings("unused")
+	@GetMapping("/statusprogress")
+	public String getStatusprogress(Model model,@RequestParam String mobileNumber, @RequestParam String password) throws NullPointerException {
+		Status status=null;
+		ApplicationDetailes appDetails = appicationService.findByMobile(Long.valueOf(mobileNumber));
+		if(null != appDetails) {
+			if (AppUtilities.isNotNullAndNotEmpty(password)) {
+				String mobile = String.valueOf(mobileNumber);
+				String last4digits = mobile.substring(6,10);
+				
+				DateFormat dateFormat = new SimpleDateFormat("yyyy");
+				String strDate = dateFormat.format(appDetails.getDob());
+				String concatInputs = last4digits + strDate.replace("-", "");
+				
+				if (concatInputs.equals(password)) {
+					
+					try {
+						status = statusService.findByMobile(Long.valueOf(mobileNumber));
+						String statusState=status.getStatus();
+						 if("I".equalsIgnoreCase(statusState)){
+							model.addAttribute("applicantNo",status.applicantNumber);
+							model.addAttribute("status", statusState);
+							return "statusprogress";
+						}
+						 else if("A".equalsIgnoreCase(statusState)){
+								model.addAttribute("applicantNo",status.applicantNumber);
+								model.addAttribute("status", statusState);
+								return "statusprogress";
+							}
+						 else if("R".equalsIgnoreCase(statusState)){
+								model.addAttribute("applicantNo",status.applicantNumber);
+								model.addAttribute("status", statusState);
+								return "statusprogress";
+							}
+						 else if("C".equalsIgnoreCase(statusState)){
+								model.addAttribute("applicantNo",status.applicantNumber);
+								model.addAttribute("status", statusState);
+								return "statusprogress";
+							}
+					} catch (NullPointerException e) {
+						//e.printStackTrace();
+						model.addAttribute("applicantNo",appDetails.applicantNumber);
+						return "statusprogress";
+					}
+					
+					
+					
+				}else {
+					model.addAttribute("error","Invalid Credentital");
+					return "status";
+				}
+				
+			}
+			else {
+				model.addAttribute("error","Empty Password");
+				return "status";
+			}
+		}else {
+			model.addAttribute("error","Invalid Mobile Number");
+			return "status";
+		}
+		return "";
+	}
 
 	@GetMapping("/contact")
 	public String contactPage() {
@@ -83,7 +146,9 @@ public class AppicationController extends AppConstants {
 	}
 
 	@GetMapping("/status")
-	public String status() {
+	public String status(Model model) {
+		Status status = new Status();
+		model.addAttribute("status", status);
 		return "status";
 	}
 
@@ -137,37 +202,9 @@ public class AppicationController extends AppConstants {
 		}
 	}
 	
-	@PostMapping(value = "/checkStatus", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
-			MediaType.APPLICATION_JSON_VALUE })
-	@ResponseBody
-	public Map checkStatus(@RequestParam String mobileNumber, @RequestParam String password) {
-		HashMap<String, Object> returnData = new HashMap<>();
-		returnData.put("ERROR", "0");
-		try {
-			Status status = statusService.findByMobile(Long.valueOf(mobileNumber));
-			if (null != status) {
-				if (AppUtilities.isNotNullAndNotEmpty(password)) {
-					ApplicationDetailes appDetails = appicationService
-							.findByApplicantNumber(status.getApplicantNumber());
-					String mobile = String.valueOf(appDetails.getMobile()); // 9743875023
-					String last4digits = mobile.substring(6, 10);
-					DateFormat dateFormat = new SimpleDateFormat("yyyy");
-					String strDate = dateFormat.format(appDetails.getDob());
-					String concatInputs = last4digits + strDate.replace("-", "");
-					if (concatInputs.equals(password)) {
-						returnData.put("Status", status);
-						returnData.put("ERROR", "1");
-					} else {
-						returnData.put("MESSAGE", "In correct credentials,Please try again");
-					}
-				}
-			} else {
-				returnData.put("MESSAGE", "Mobile number not exits");
-			}
-		} catch (Exception e) {
-			logger.error("ERROR WHILE fetching mobile number", e.getMessage());
-		}
-		return returnData;
+	@GetMapping("/checkStatus")
+	public String checkStatus(Model model,@RequestParam String mobileNumber, @RequestParam String password) {
+		return "statusprogress";
 	}
 
 	@PostMapping("/save")
@@ -186,11 +223,14 @@ public class AppicationController extends AppConstants {
 						"Ooops Unexpected Error occured while saving Application, Please contact System Administrator !");
 				return "failure";
 			} else {
-				model.addAttribute("STATUSTYPE", "SAVE");
-				model.addAttribute("applicationDetailes", applicationDetailes);
-				model.addAttribute("applicationNumber",applicationDetailes.getApplicantNumber()); 
-				model.addAttribute("applicationStatus",applicationDetailes.getApplicationStatus()); 
-				return "success";		
+//				model.addAttribute("STATUSTYPE", "SAVE");
+//				model.addAttribute("applicationDetailes", applicationDetailes);
+//				model.addAttribute("applicationNumber",applicationDetailes.getApplicantNumber()); 
+//				model.addAttribute("applicationStatus",applicationDetailes.getApplicationStatus()); 
+//				return "success";	
+				model.addAttribute("applicantNo",applicationDetailes.getApplicantNumber());
+				model.addAttribute("status", null);
+				return "statusprogress";
 			}
 		} catch (Exception e) {
 			logger.error("Exception while saving aapplication", e);
@@ -250,14 +290,21 @@ public class AppicationController extends AppConstants {
 				appStatus.setStatus("I");
 				appStatus.setMobile(paymentDetails.getMobile());
 				appStatus.setAppliedDate(new Date());
-				appStatus.setComment("created by System");
+				//appStatus.setComment();
 				statusService.saveStatus(appStatus);
 				
-				model.addAttribute("STATUSTYPE", "PAYMENT1");
-				model.addAttribute("status", appStatus);
-				model.addAttribute("applicationNumber",appStatus.getApplicantNumber()); 
-				model.addAttribute("applicationStatus",appStatus.getStatus()); 
-				return "success";
+//				model.addAttribute("STATUSTYPE", "PAYMENT1");
+//				model.addAttribute("status", appStatus);
+//				model.addAttribute("applicationNumber",appStatus.getApplicantNumber()); 
+//				model.addAttribute("applicationStatus",appStatus.getStatus()); 
+//				return "statusprogress";
+//				Status newStatus=statusService.findByApplicantNumber(paymentDetails.getApplicantNumber());
+//				if(null != newStatus ) {
+//					statusService.setStatusByApplicantNumber("I", "payment 1 completed", paymentDetails.getApplicantNumber());
+//				}
+				model.addAttribute("applicantNo",appStatus.getApplicantNumber());
+				model.addAttribute("status", "I");
+				return "statusprogress";
 
 			} catch (Exception e) {
 				log.error("Exception while saving aapplication", e.getMessage());
@@ -317,19 +364,28 @@ public class AppicationController extends AppConstants {
 				paymentDetails2Service.savePaymentDetails(paymentDetails);
 
 				logger.info("Exception of Payement save started");
-				Status appStatus = new Status();
-				appStatus.setApplicantNumber(paymentDetails.getApplicantNumber());
-				appStatus.setStatus("C");
-				appStatus.setMobile(paymentDetails.getMobile());
-				appStatus.setAppliedDate(new Date());
-				appStatus.setComment("Second payment done by System");
-				statusService.saveStatus(appStatus);
+				//Status appStatus = new Status();
+//				appStatus.setApplicantNumber(paymentDetails.getApplicantNumber());
+//				appStatus.setStatus("C");
+//				appStatus.setMobile(paymentDetails.getMobile());
+//				appStatus.setAppliedDate(new Date());
+//				appStatus.setComment("Second payment done by System");
+//				statusService.saveStatus(appStatus);
 				
-				model.addAttribute("STATUSTYPE", "PAYMENT2");
-				model.addAttribute("status", appStatus);
-				model.addAttribute("applicationNumber",appStatus.getApplicantNumber()); 
-				model.addAttribute("applicationStatus",appStatus.getStatus()); 
-				return "success";
+				Status newStatus=statusService.findByApplicantNumber(paymentDetails.getApplicantNumber());
+				newStatus.setStatus("C");
+				statusService.saveStatus(newStatus);
+//				if(null != newStatus ) {
+//					statusService.setStatusByApplicantNumber("C", "Second payment done by System", paymentDetails.getApplicantNumber());
+//				}
+				
+//				model.addAttribute("STATUSTYPE", "PAYMENT2");
+//				model.addAttribute("status", appStatus);
+//				model.addAttribute("applicationNumber",appStatus.getApplicantNumber()); 
+//				model.addAttribute("applicationStatus",appStatus.getStatus()); 
+				model.addAttribute("applicantNo",newStatus.applicantNumber);
+				model.addAttribute("status", "C");
+				return "statusprogress";
 
 			} catch (Exception e) {
 				log.error("Exception while saving aapplication", e.getMessage());
@@ -361,5 +417,5 @@ public class AppicationController extends AppConstants {
 		return result;
 	}
 
-
+	
 }

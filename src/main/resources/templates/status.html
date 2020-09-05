@@ -51,9 +51,9 @@
 								year of brith. </small> <span id="e_password"></span>
 						</div>
 						<button type="button" id="changetabbutton1"
-							onclick="checkStatus()" class="btn btn-primary ">Check
-							Status</button>
+							onclick="checkStatus1()" class="btn btn-primary ">Check Status</button>
 						<br /> <br />
+						<span th:text ="${error}">
 						</fieldset>
 						</div>
 						</div>
@@ -70,11 +70,13 @@
 </div>
 							<script type="text/javascript">
     function checkStatus() {
+    	alert('hi');
 		let mobileNo = $('#mobile_number_verify').val();
-		let password = $('#password').val();
+		let password = $('#passStatus').val();
+		
 		if (mobileNo && password) {
 				$.ajax({
-							type : 'POST',
+							type : 'GET',
 							url : "/checkStatus?mobileNumber="+mobileNo+"&password="+password,
 							contentType : "application/json; charset=utf-8",
 							data : {
@@ -82,91 +84,29 @@
 								password : password
 							},
 							success : function(result) {
-								$('#modalHTml').html(statusHTML);
-								if(result.ERROR == '1') {
-									let s = result.Status;
-									$('#applicantNumber').html(s.applicantNumber);
-									$('#statusMessage').html(s.status);
-								}else {
-									$('#appNo').remove();
-									$('#statusMessage').html('Mobile/Password is incorrect');
-								}
-								$('#applicationStatus').modal('show');
+								
 							}
 						});
-				document.getElementById('e_mobile').innerHTML = "";
-				document.getElementById('e_password').innerHTML = "";
+				
 			} else {
 				
 			}
 		}
     </script>
-   <script type="text/javascript"> 
-    let statusHTML = `<div class="modal fade right" id="applicationStatus" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-		data-backdrop="false">
-		<div
-			class="modal-dialog modal-side modal-bottom-right modal-notify modal-info"
-			role="document">
-			<!--Content-->
-			<div class="modal-content">
-				<!--Header-->
-				<div class="modal-header">
-					<p class="heading" style="padding-left: 10%;">
-					<h2>Application Details</h2>
-					</p>
-
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true" class="white-text">&times;</span>
-					</button>
-				</div>
-
-				<!--Body-->
-				<div class="modal-body">
-
-					<div class="row">
-						<div class="col-3">
-							<p></p>
-							<p class="text-center">
-								<i class="fas fa-shopping-cart fa-4x"></i>
-							</p>
-						</div>
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item"><span id="appNo">Application Id: <span
-								id="applicantNumber"></span> </span><br> <br>
-								Status: <span id="statusMessage"></span>
-							</li>
-						</ul>
-						<div></div>
-					</div>
-				</div>
-
-				<!--Footer-->
-				<div class="modal-footer justify-content-center">
-					<!-- <a type="button" class="btn btn-info" href="form.html">Proceed</a>   -->
-					<h3>Help Line</h3>
-					<ul>
-						<li><small>Phone no: +91 8892075276,+91
-								8660193339</small></li>
-						<li><small>E-mail: apitotechnologies@gmail.com</small></li>
-					</ul>
-					<br> <a type="button"
-						class="btn btn-outline-info waves-effect"
-						data-dismiss="modal" href="#">Cancel</a>
-				</div>
-			</div>
-
-		</div>`;
-
-
-</script>
     
+    	<script type="text/javascript">
+    function checkStatus1() {
+    	let mobileNo = $('#mobile_number_verify').val();
+		let password = $('#passStatus').val();
+    	 window.location.href =  "/statusprogress?mobileNumber="+mobileNo+"&password="+password;	
+		
+		}
+    </script>
 </body>
 <script th:src="@{/js/jquery-3.5.1.min.js}" crossorigin="anonymous"></script>
 <script th:src="@{/js/popper.min.js}" crossorigin="anonymous"></script>
 <script th:src="@{/js/bootstrap.min.js}" crossorigin="anonymous"></script>
-<script th:src="@{/js/input_validation.js}" crossorigin="anonymous"></script>
+<!-- <script th:src="@{/js/input_validation.js}" crossorigin="anonymous"></script> -->
 <script th:src="@{/js/status_validation.js}" crossorigin="anonymous"></script>
 <script th:src="@{/js/supporters.js}" crossorigin="anonymous"></script>
 

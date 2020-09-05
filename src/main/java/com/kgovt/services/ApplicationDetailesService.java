@@ -24,6 +24,7 @@ import com.kgovt.datatable.paging.PagingRequest;
 import com.kgovt.models.ApplicationDetailes;
 import com.kgovt.models.PaymentDetails;
 import com.kgovt.models.PaymentDetails2;
+import com.kgovt.models.Status;
 import com.kgovt.repositories.ApplicationDetailesRepository;
 import com.kgovt.utils.AppConstants;
 import com.kgovt.utils.AppUtilities;
@@ -158,6 +159,21 @@ public class ApplicationDetailesService extends AppConstants {
 			orderRequest.put("currency", "INR");
 			orderRequest.put("receipt", paymentDetails.getReceiptNo());
 			orderRequest.put("payment_capture", true);
+//			"transfers": [
+//			              {
+//			                "account": "acc_CPRsN1LkFccllA",
+//			                "amount": 1000,
+//			                "currency": "INR",
+//			                "notes": {
+//			                  "branch": "Acme Corp Bangalore North",
+//			                  "name": "Gaurav Kumar"
+//			                },
+//			                "linked_account_notes": [
+//			                  "branch"
+//			                ],
+//			                "on_hold": 1,
+//			                "on_hold_until": 1671222870
+//			              },
 			try {
 				RazorpayClient razorpay = new RazorpayClient(KEY, SECRET);
 				com.razorpay.Order order = razorpay.Orders.create(orderRequest);
@@ -314,4 +330,9 @@ public class ApplicationDetailesService extends AppConstants {
 		return EMPTY_COMPARATOR;
 	}
 
+	public ApplicationDetailes findByMobile(Long mobile) {
+		return applicationDetailesRepository.findByMobile(mobile);
+	}
+	
+	
 }

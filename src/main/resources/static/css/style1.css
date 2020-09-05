@@ -27,7 +27,6 @@ nav a{
 }
 
 .custCentDivMD{
-   
     min-height: 400px;
     max-height: 600px;
     text-align: left;
@@ -50,9 +49,17 @@ nav a{
 }
  p#innerPara{padding:20px ;}
  legend{width:200px;padding:10px 20px;}
- 
 
- input[type=number] {
+
+.footerDiv{
+    min-height: 100px;
+    text-align: left;
+    background-color: rgb(72, 72, 73);
+    margin-top: 2%;
+    margin-top: 0ch;
+}
+
+input[type=number] {
   -moz-appearance: textfield;
 }
 
@@ -61,23 +68,9 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-.bs-example{
-    	margin: 0px;
-    }
-
-p{
-    padding-left: 10px;
-    padding-right: 10px;
-    text-align:justify ;
-}
-
-.card {display:inline-block;} 
-
-
 .marks {
     display: inline-flex;
-    width: 10%;
+    width: 5%;
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
     line-height: 1.5;
@@ -119,4 +112,188 @@ p{
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+}
+
+#content1{
+
+    
+    position: relative;
+
+    padding: 8px;
+    
+
+}
+
+#content2{
+    position: relative;
+    padding: 8px;
+    display: none;
+}
+
+#content3{
+    position: relative;
+
+    padding: 8px;
+    display: none;
+}
+
+#contentRej{
+    position: relative;
+
+    padding: 8px;
+    display: none;
+}
+
+
+#content4{
+    position: relative;
+    padding: 8px;
+    display: none;
+
+
+}
+
+
+
+
+
+
+.timeline {
+	list-style-type: none;
+	display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.li {
+    transition: all 200ms ease-in;
+   
+}
+
+.timestamp {
+	margin-bottom: 20px;
+	padding: 0px 40px;
+	display: flex;
+	flex-direction: column;
+	font-weight: 100;
+}
+
+.timestamp p {
+
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.status {
+	padding: 0px 40px;
+	display: flex;
+	justify-content: center;
+	border-top:  solid #D6DCE0;
+	position: relative;
+	transition: all 200ms ease-in;
+}
+
+.status span {
+    font-weight: 600;
+    margin: 3px;
+    font-size: x-large;
+}
+
+.status:before {
+	content: '';
+	width: 25px;
+	height: 25px;
+	background-color: white;
+	border-radius: 25px;
+	border: 1px solid #ddd;
+	position: absolute;
+	top: -15px;
+	left: 42%;
+	transition: all 200ms ease-in;
+}
+
+.li.complete .status {
+	border-top:  solid #ebd728;
+}
+
+.li.complete .timestamp p{
+    color: #ebd728;
+}
+
+.li.complete .status:before {
+	background-color: #ebd728;
+	border: none;
+	transition: all 200ms ease-in;
+}
+
+.li.complete .status span {
+	color: #ebd728;
+}
+
+/* @media (min-device-width: 320px) and (max-device-width: 700px) {
+	.timeline {
+		list-style-type: none;
+		display: block;
+	}
+
+	.li {
+		transition: all 200ms ease-in;
+		display: flex;
+		width: inherit;
+	}
+
+	.timestamp {
+		width: 100px;
+	}
+
+	.status:before {
+		left: -8%;
+		top: 30%;
+		transition: all 200ms ease-in;
+	}
+} */
+
+
+.li.inactive .status {
+	border-top:  solid #909090;
+}
+
+.li.inactive .status:before {
+	background-color: #909090;;
+	border: none;
+	transition: all 200ms ease-in;
+}
+
+.li.inactive .status span {
+	color: #909090;
+}
+
+.li.inactive .timestamp p{
+    color: #909090;
+}
+
+.contentLabel{
+
+    font-size: large;
+    display: block;
+
+
+}
+
+.li.reject .status {
+	border-top:  solid #eb2828;
+}
+
+.li.reject .timestamp p{
+    color: #eb2828;
+}
+
+.li.reject .status:before {
+	background-color: #eb2828;
+	border: none;
+	transition: all 200ms ease-in;
+}
+
+.li.reject .status span {
+	color: #eb2828;
 }

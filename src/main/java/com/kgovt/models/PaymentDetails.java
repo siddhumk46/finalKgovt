@@ -37,7 +37,7 @@ public class PaymentDetails implements Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "record_id")
+	@Column(name = "payment_details_one_id")
 	private Long recordId;
 	
 	private String razorpayPaymentId;

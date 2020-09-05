@@ -32,7 +32,7 @@ public class AdminUsers implements Serializable,Cloneable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "record_id")
+	@Column(name = "admin_id")
 	private Long recordId;
 	
 	@Column(name="password")
