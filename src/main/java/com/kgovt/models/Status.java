@@ -48,7 +48,7 @@ public class Status  implements Serializable, Cloneable{
 	@Column(name = "applied_Date")
 	private Date appliedDate;
 	
-	@Column(name = "applicant_number")
+	@Column(name = "applicant_number",unique = true)
 	public long applicantNumber;
 	
 	private Long mobile ;

@@ -122,7 +122,7 @@ public class AdminController extends AppConstants {
 		if (AppUtilities.isNotNullAndNotEmpty(photoFile)) {
 			String[] fileNames = photoFile.split("_");
 			String path = fileNames[0];
-			String rootPath = System.getProperty("user.home");
+			String rootPath = System.getProperty("/var/apito-s3");
 			String folderStored = rootPath + File.separator +"Uploads"+ File.separator+ path + File.separator + photoFile;
 			 File downloadFile= new File(folderStored); 
 			 //return new FileSystemResource(new File(folderStored));

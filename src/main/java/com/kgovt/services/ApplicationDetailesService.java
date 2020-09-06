@@ -225,7 +225,7 @@ public class ApplicationDetailesService extends AppConstants {
 
 					byte[] bytes = file.getBytes();
 					// Creating the directory to store file
-					String rootPath = System.getProperty("user.home");
+					String rootPath = System.getProperty("/var/apito-s3");
 					// File dir = new File(rootPath + File.separator + "tmpFiles" + File.separator +
 					// mobile+ File.separator + fileFoler);
 					String folder2Store = rootPath + File.separator + "Uploads"+ File.separator+fileFoler + File.separator;

@@ -50,13 +50,13 @@ public class AppicationController extends AppConstants {
 
 	@Autowired
 	private PaymentDetailsService paymentDetailsService;
-	
+
 	@Autowired
 	private PaymentDetails2Service paymentDetails2Service;
 
 	@Autowired
 	private StatusService statusService;
-	
+
 	@Autowired
 	private AdminUsersService adminUsersService;
 
@@ -66,80 +66,46 @@ public class AppicationController extends AppConstants {
 	public String getApplicationHome(Model model) {
 		return "index";
 	}
-	
+
 	@GetMapping("/index")
 	public String getIndex(Model model) {
 		return "index";
 	}
-	@SuppressWarnings("unused")
-	@GetMapping("/statusprogress")
-	public String getStatusprogress(Model model,@RequestParam String mobileNumber, @RequestParam String password) throws NullPointerException {
-		Status status=null;
+
+	@PostMapping(value = "/statusprogress", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {MediaType.APPLICATION_JSON_VALUE })
+	@ResponseBody
+	public Map getStatusprogress(Model model, @RequestParam String mobileNumber, @RequestParam String password)
+			throws NullPointerException {
+		HashMap<String, Object> returnData = new HashMap<>();
+		returnData.put("ERROR", "0");
 		ApplicationDetailes appDetails = appicationService.findByMobile(Long.valueOf(mobileNumber));
-		if(null != appDetails) {
+		if (null != appDetails) {
 			if (AppUtilities.isNotNullAndNotEmpty(password)) {
 				String mobile = String.valueOf(mobileNumber);
-				String last4digits = mobile.substring(6,10);
-				
+				String last4digits = mobile.substring(6, 10);
+
 				DateFormat dateFormat = new SimpleDateFormat("yyyy");
 				String strDate = dateFormat.format(appDetails.getDob());
 				String concatInputs = last4digits + strDate.replace("-", "");
-				
+
 				if (concatInputs.equals(password)) {
-					
-					try {
-						status = statusService.findByMobile(Long.valueOf(mobileNumber));
-						String statusState=status.getStatus();
-						 if("I".equalsIgnoreCase(statusState)){
-							model.addAttribute("applicantNo",status.applicantNumber);
-							model.addAttribute("status", statusState);
-							return "statusprogress";
-						}
-						 else if("A".equalsIgnoreCase(statusState)){
-								model.addAttribute("applicantNo",status.applicantNumber);
-								model.addAttribute("status", statusState);
-								return "statusprogress";
-							}
-						 else if("R".equalsIgnoreCase(statusState)){
-								model.addAttribute("applicantNo",status.applicantNumber);
-								model.addAttribute("status", statusState);
-								return "statusprogress";
-							}
-						 else if("C".equalsIgnoreCase(statusState)){
-								model.addAttribute("applicantNo",status.applicantNumber);
-								model.addAttribute("status", statusState);
-								return "statusprogress";
-							}
-					} catch (NullPointerException e) {
-						//e.printStackTrace();
-						model.addAttribute("applicantNo",appDetails.applicantNumber);
-						return "statusprogress";
-					}
-					
-					
-					
-				}else {
-					model.addAttribute("error","Invalid Credentital");
-					return "status";
+					returnData.put("applicantNumber", appDetails.applicantNumber);
+					//return "redirect:/viewAppStatus?applicantNumber=" + appDetails.applicantNumber;
+				} else {
+					returnData.put("ERROR", "1");//"Invalid Credentital"
 				}
-				
-			}
-			else {
-				model.addAttribute("error","Empty Password");
-				return "status";
-			}
-		}else {
-			model.addAttribute("error","Invalid Mobile Number");
-			return "status";
+			} 
+		} else {
+			returnData.put("ERROR", "2");
 		}
-		return "";
+		return returnData;
 	}
 
 	@GetMapping("/contact")
 	public String contactPage() {
 		return "contact";
 	}
-	
+
 	@GetMapping("/offline")
 	public String offlinePage() {
 		return "offline";
@@ -177,14 +143,14 @@ public class AppicationController extends AppConstants {
 
 	@GetMapping("/saveAdmin")
 	public String saveAdmin() {
-		AdminUsers admin =new AdminUsers();
+		AdminUsers admin = new AdminUsers();
 		admin.setPassword("admin123");
 		admin.setRegion("Dharwad");
 		admin.setRole("ROLE_ADMIN");
 		adminUsersService.saveAdmin(admin);
 		return "";
 	}
-	
+
 	@GetMapping("/indexFailure")
 	public String indexPage(Model model) {
 		model.addAttribute("failure", "Payment Failed");
@@ -201,9 +167,9 @@ public class AppicationController extends AppConstants {
 			return "0";
 		}
 	}
-	
+
 	@GetMapping("/checkStatus")
-	public String checkStatus(Model model,@RequestParam String mobileNumber, @RequestParam String password) {
+	public String checkStatus(Model model, @RequestParam String mobileNumber, @RequestParam String password) {
 		return "statusprogress";
 	}
 
@@ -228,7 +194,7 @@ public class AppicationController extends AppConstants {
 //				model.addAttribute("applicationNumber",applicationDetailes.getApplicantNumber()); 
 //				model.addAttribute("applicationStatus",applicationDetailes.getApplicationStatus()); 
 //				return "success";	
-				model.addAttribute("applicantNo",applicationDetailes.getApplicantNumber());
+				model.addAttribute("applicantNo", applicationDetailes.getApplicantNumber());
 				model.addAttribute("status", null);
 				return "statusprogress";
 			}
@@ -237,7 +203,7 @@ public class AppicationController extends AppConstants {
 		}
 		return "success";
 	}
-	
+
 	@GetMapping("/makeFirstPayment")
 	public String makeFirstPayment(Model model, @RequestParam Long applicationNumber) {
 		try {
@@ -252,15 +218,16 @@ public class AppicationController extends AppConstants {
 			paymentDetails.setApplicantNumber(applicationDetailes.getApplicantNumber());
 			paymentDetails = appicationService.proceedFirstPayment(paymentDetails);
 			if (null == paymentDetails) {
-				model.addAttribute("error","Payment details are not retrived");
+				model.addAttribute("error", "Payment details are not retrived");
 				return "failure";
 			} else {
-				model.addAttribute("paymentDetails",paymentDetails);
+				model.addAttribute("paymentDetails", paymentDetails);
 				return "payment";
 			}
+
 		} catch (Exception e) {
 			log.error("Error making first Payment", e.getMessage());
-			model.addAttribute("error","Exception While making first payment, Please contact Administrator");
+			model.addAttribute("error", "Exception While making first payment, Please contact Administrator");
 			return "failure";
 		}
 	}
@@ -274,7 +241,7 @@ public class AppicationController extends AppConstants {
 		} catch (SignatureException e1) {
 			// TODO Auto-generated catch block
 			log.error("Error making first Payment", e1.getMessage());
-			model.addAttribute("error","Error making first Payment");
+			model.addAttribute("error", "Error making first Payment");
 			return "failure";
 		}
 		if (null != status && paymentDetails.getRazorpaySignature().equals(status)) {
@@ -290,29 +257,19 @@ public class AppicationController extends AppConstants {
 				appStatus.setStatus("I");
 				appStatus.setMobile(paymentDetails.getMobile());
 				appStatus.setAppliedDate(new Date());
-				//appStatus.setComment();
+				// appStatus.setComment();
 				statusService.saveStatus(appStatus);
-				
-//				model.addAttribute("STATUSTYPE", "PAYMENT1");
-//				model.addAttribute("status", appStatus);
-//				model.addAttribute("applicationNumber",appStatus.getApplicantNumber()); 
-//				model.addAttribute("applicationStatus",appStatus.getStatus()); 
-//				return "statusprogress";
-//				Status newStatus=statusService.findByApplicantNumber(paymentDetails.getApplicantNumber());
-//				if(null != newStatus ) {
-//					statusService.setStatusByApplicantNumber("I", "payment 1 completed", paymentDetails.getApplicantNumber());
-//				}
-				model.addAttribute("applicantNo",appStatus.getApplicantNumber());
-				model.addAttribute("status", "I");
-				return "statusprogress";
+
+				return "redirect:/viewAppStatus?applicantNumber=" + paymentDetails.getApplicantNumber();
 
 			} catch (Exception e) {
 				log.error("Exception while saving aapplication", e.getMessage());
-				model.addAttribute("error","Error making first Payment");
+				model.addAttribute("error", "Error making first Payment");
 				return "failure";
 			}
 		} else {
-			model.addAttribute("error", "Payment successful and did not validated, Please contact Service Administrator/helpline numbers");
+			model.addAttribute("error",
+					"Payment successful and did not validated, Please contact Service Administrator/helpline numbers");
 			return "failure";
 		}
 	}
@@ -331,15 +288,15 @@ public class AppicationController extends AppConstants {
 			paymentDetails.setApplicantNumber(applicationDetailes.getApplicantNumber());
 			paymentDetails = appicationService.proceedSecondPayment(paymentDetails);
 			if (null == paymentDetails) {
-				model.addAttribute("error","Payment details are not retrived");
+				model.addAttribute("error", "Payment details are not retrived");
 				return "failure";
 			} else {
-				model.addAttribute("paymentDetails",paymentDetails);
+				model.addAttribute("paymentDetails", paymentDetails);
 				return "payment2";
 			}
 		} catch (Exception e) {
 			log.error("Error making first Payment", e.getMessage());
-			model.addAttribute("error","Exception While making first payment, Please contact Administrator");
+			model.addAttribute("error", "Exception While making first payment, Please contact Administrator");
 			return "failure";
 		}
 	}
@@ -353,7 +310,7 @@ public class AppicationController extends AppConstants {
 		} catch (SignatureException e1) {
 			// TODO Auto-generated catch block
 			log.error("Error making second Payment", e1.getMessage());
-			model.addAttribute("error","Error making second Payment");
+			model.addAttribute("error", "Error making second Payment");
 			return "failure";
 		}
 		if (null != status && paymentDetails.getRazorpaySignature().equals(status)) {
@@ -362,43 +319,24 @@ public class AppicationController extends AppConstants {
 				paymentDetails.setCreatedDate(new Date());
 				paymentDetails.setStatus("Success");
 				paymentDetails2Service.savePaymentDetails(paymentDetails);
-
 				logger.info("Exception of Payement save started");
-				//Status appStatus = new Status();
-//				appStatus.setApplicantNumber(paymentDetails.getApplicantNumber());
-//				appStatus.setStatus("C");
-//				appStatus.setMobile(paymentDetails.getMobile());
-//				appStatus.setAppliedDate(new Date());
-//				appStatus.setComment("Second payment done by System");
-//				statusService.saveStatus(appStatus);
-				
-				Status newStatus=statusService.findByApplicantNumber(paymentDetails.getApplicantNumber());
+				Status newStatus = statusService.findByApplicantNumber(paymentDetails.getApplicantNumber());
 				newStatus.setStatus("C");
 				statusService.saveStatus(newStatus);
-//				if(null != newStatus ) {
-//					statusService.setStatusByApplicantNumber("C", "Second payment done by System", paymentDetails.getApplicantNumber());
-//				}
-				
-//				model.addAttribute("STATUSTYPE", "PAYMENT2");
-//				model.addAttribute("status", appStatus);
-//				model.addAttribute("applicationNumber",appStatus.getApplicantNumber()); 
-//				model.addAttribute("applicationStatus",appStatus.getStatus()); 
-				model.addAttribute("applicantNo",newStatus.applicantNumber);
-				model.addAttribute("status", "C");
-				return "statusprogress";
+				return "redirect:/viewAppStatus?applicantNumber=" + paymentDetails.getApplicantNumber();
 
 			} catch (Exception e) {
 				log.error("Exception while saving aapplication", e.getMessage());
-				model.addAttribute("failure","Error making second Payment");
+				model.addAttribute("failure", "Error making second Payment");
 				return "failure";
 			}
 		} else {
-			model.addAttribute("error", "Payment successful and did not validated, Please contact Service Administrator/helpline numbers");
+			model.addAttribute("error",
+					"Payment successful and did not validated, Please contact Service Administrator/helpline numbers");
 			return "failure";
 		}
 	}
-	
-	
+
 	public static String calculateRFC2104HMAC(String data, String secret) throws java.security.SignatureException {
 		String result;
 		try {
@@ -417,5 +355,20 @@ public class AppicationController extends AppConstants {
 		return result;
 	}
 
-	
+	@GetMapping("/viewAppStatus")
+	public String viewAppStatus(Model model, @RequestParam String applicantNumber) {
+		try {
+			Status newStatus = statusService.findByApplicantNumber(Long.valueOf(applicantNumber));
+			if (null == newStatus) {
+				model.addAttribute("status", null);
+			} else {
+				model.addAttribute("status", newStatus.getStatus());
+			}
+			model.addAttribute("applicantNo", applicantNumber);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "statusprogress";
+	}
 }
