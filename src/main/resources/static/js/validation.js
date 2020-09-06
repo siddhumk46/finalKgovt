@@ -27,8 +27,8 @@ $(function(){
 
 	  $('#puc_marks').change(function(){
 
-	    var obtained = document.getElementById('sslc_marks').value;
-	    var total = document.getElementById('sslc_totalmarks').value;
+	    var obtained = document.getElementById('puc_marks').value;
+	    var total = document.getElementById('puc_totalmarks').value;
 
 
 	    if(total == ''){
@@ -37,20 +37,20 @@ $(function(){
 
 	    else if(parseInt(obtained) <= parseInt(total)){
 
-	      document.getElementById('sslc_percentage').value = (parseInt(obtained) / parseInt(total)) * 100;
+	      document.getElementById('puc_percentage').value = (parseInt(obtained) / parseInt(total)) * 100;
 	    }else{
 	      alert('obtained marks cannot be more than total marks.Re-Enter your marks');
 	      
-	       document.getElementById('sslc_marks').value='';
-	   document.getElementById('sslc_totalmarks').value='';
-	   document.getElementById('sslc_marks').focus();
+	       document.getElementById('pucc_marks').value='';
+	   document.getElementById('puc_totalmarks').value='';
+	   document.getElementById('puc_marks').focus();
 	    }
 
 	  });
 	  $('#ug_marks').change(function(){
 
-	    var obtained = document.getElementById('sslc_marks').value;
-	    var total = document.getElementById('sslc_totalmarks').value;
+	    var obtained = document.getElementById('ug_marks').value;
+	    var total = document.getElementById('ug_totalmarks').value;
 
 
 	    if(total == ''){
@@ -59,20 +59,20 @@ $(function(){
 
 	    else if(parseInt(obtained) <= parseInt(total)){
 
-	      document.getElementById('sslc_percentage').value = (parseInt(obtained) / parseInt(total)) * 100;
+	      document.getElementById('ug_percentage').value = (parseInt(obtained) / parseInt(total)) * 100;
 	    }else{
 	      alert('obtained marks cannot be more than total marks.Re-Enter your marks');
 	      
-	       document.getElementById('sslc_marks').value='';
-	   document.getElementById('sslc_totalmarks').value='';
-	   document.getElementById('sslc_marks').focus();
+	       document.getElementById('ug_marks').value='';
+	   document.getElementById('ug_totalmarks').value='';
+	   document.getElementById('ug_marks').focus();
 	    }
 
 	  });
 	  $('#pg_marks').change(function(){
 
-	    var obtained = document.getElementById('sslc_marks').value;
-	    var total = document.getElementById('sslc_totalmarks').value;
+	    var obtained = document.getElementById('pg_marks').value;
+	    var total = document.getElementById('pg_totalmarks').value;
 
 
 	    if(total == ''){
@@ -81,13 +81,13 @@ $(function(){
 
 	    else if(parseInt(obtained) <= parseInt(total)){
 
-	      document.getElementById('sslc_percentage').value = (parseInt(obtained) / parseInt(total)) * 100;
+	      document.getElementById('pg_percentage').value = (parseInt(obtained) / parseInt(total)) * 100;
 	    }else{
 	      alert('obtained marks cannot be more than total marks.Re-Enter your marks');
 	      
-	       document.getElementById('sslc_marks').value='';
-	   document.getElementById('sslc_totalmarks').value='';
-	   document.getElementById('sslc_marks').focus();
+	       document.getElementById('pg_marks').value='';
+	   document.getElementById('pg_totalmarks').value='';
+	   document.getElementById('pg_marks').focus();
 	    }
 
 	  });
@@ -247,6 +247,22 @@ $(function(){
         document.getElementById('e_caste').innerHTML = "**caste is required";
         document.getElementById('e_caste').style.color = 'red';
         flag = 1;
+      }
+      
+      else if(document.getElementById('caste').value == 'O') {
+      			
+      			if(document.getElementById('other') == '') {
+      				
+      				document.getElementById('other').focus();
+      				document.getElementById('e_caste').innerHTML = "**caste is required";
+			        document.getElementById('e_caste').style.color = 'red';
+			        flag = 1;
+      			
+      			}
+      			else
+      				document.getElementById('e_caste').innerHTML = "";
+      
+      
       }
       else
         document.getElementById('e_caste').innerHTML = "";
@@ -825,7 +841,7 @@ function ValidateSize(file) {
 
     }
       var filePath = file.value; 
-      var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.pdf)$/i; 
+      var allowedExtensions = /(\.pdf)$/i; 
         
       if (!allowedExtensions.exec(filePath)) { 
           alert('Invalid file type'); 
@@ -833,6 +849,8 @@ function ValidateSize(file) {
           return false; 
       }   
 }
+
+
 function ageCal(){
 	  var dob = parseInt(document.getElementById('dob').value.substring(0,4));
 	  var today = new Date();
@@ -851,6 +869,8 @@ function Service(){
   document.getElementById('period_of_service').value = today.getFullYear() - pos;
 
 }
+
+
 function changestatus(){
   var status = document.getElementById('caste');
  
@@ -861,21 +881,33 @@ function changestatus(){
   }
 }
 
-function fileValidation() { 
-	  var fileInput =  
-	      document.getElementById('file'); 
-	    
-	  var filePath = fileInput.value; 
+function ValidateImage(file) { 
+	 try{
+    var FileSize = file.files[0].size / 1024 / 1024 / 1; // in MB
+    // console.log(file.files[0].filePath);
+    console.log('asd');
+	}
+	catch(e){
+	}
+    if (FileSize > 1) {
+        alert('File size exceeds 2 MB');
+        $(file).val(''); // for clearing with Jquery
+       
+       console.log('asd');
+       return;
+    } 
+    
+    else {
 
-	  // Allowing file type
-	  var allowedExtensions =  
-	/(\.pdf)$/i; 
-	    
-	  if (!allowedExtensions.exec(filePath)) { 
-	    document.getElementById('e_pincode_office').innerHTML = "**Enter correct typr of file";
-	      fileInput.value = ''; 
-	      return false; 
-	  }  
+    }
+      var filePath = file.value; 
+      var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i; 
+        
+      if (!allowedExtensions.exec(filePath)) { 
+          alert('Invalid file type'); 
+          file.value = ''; 
+          return false; 
+      }   
 	}
 
 function disableEnterKey(e){ 

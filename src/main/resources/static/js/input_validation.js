@@ -5,15 +5,15 @@ $('#mobile_number').inputmask('Regex', {
 });
 
 $('#name').inputmask('Regex', { 
-	regex: "^[a-zA-Z][a-zA-Z ]{30}[]$"
+	regex: "^[a-zA-Z][a-zA-Z ]{30}$"
 });
 
 $('#father_name').inputmask('Regex', { 
-	 regex: "^[a-zA-z][a-zA-Z ]{30}$"
+	 regex: "^[a-zA-Z][a-zA-Z ]{30}$"
 });
 
 $('#mother_name').inputmask('Regex', { 
-	 regex: "^[a-zA-z][a-zA-Z ]{30}$"
+	 regex: "^[a-zA-Z][a-zA-Z ]{30}$"
 });
 
 $('#age').inputmask('Regex', { 
@@ -23,6 +23,13 @@ $('#age').inputmask('Regex', {
 $('#religion').inputmask('Regex', { 
     regex: "^[a-zA-Z]{10}$"
 });
+
+
+$('#other').inputmask('Regex', { 
+    regex: "^[a-zA-Z][a-zA-Z ]{40}$"
+
+});
+
 
 $('#nationality').inputmask('Regex', { 
     regex: "^[a-zA-Z]{10}$"
@@ -45,7 +52,7 @@ $('#sslc_institution').inputmask('Regex', {
 
 
 $('#sslc_marks').inputmask('Regex', { 
-    regex: "^[1-9][0-9][0-9][0-9]$"
+    regex: "^[1-9][0-9][0-9]$"
 
 });
 

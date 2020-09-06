@@ -20,7 +20,7 @@ nav a{
     visibility: hidden;
 }
 .custLeftDivMD{
-    min-height: 400px;
+    max-height: 400px;
     text-align: left;
     
     margin-top: 1ch;
@@ -35,7 +35,7 @@ nav a{
 }
 
 .custRightDivMD{
-    min-height: 400px;
+    max-height: 400px;
     text-align: left;
     /* background-color:; */
     margin-top: 1ch;

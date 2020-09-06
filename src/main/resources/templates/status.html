@@ -14,6 +14,8 @@
 	crossorigin="anonymous" />
 <title>Karnataka State co-operative Federation Ltd.</title>
 <link rel="icon" th:href="@{img/logo1.jpg}" type="image/x-icon">
+
+
 </head>
 
 <body>
@@ -39,7 +41,7 @@
 						<div class="form-group">
 							<label>Mobile Number/ಮೊಬೈಲ್ ನಂಬರ *</label> <input type="text"
 								id="mobile_number_verify" name="mobile" class="form-control"
-								placeholder="Mobile Number/ಮೊಬೈಲ್ ನಂಬರ"  pattern="\d{10}" maxlength="10"> 
+								placeholder="Mobile Number/ಮೊಬೈಲ್ ನಂಬರ"> 
 								<span id="e_mobile_verify"></span>
 						</div>
 						<div class="form-group">
@@ -48,7 +50,8 @@
 								placeholder="4 Digit Mobile Number + Year of Birth /ಮೊಬೈಲ್ ನಂಬರ" pattern="^[0-9]{8}$" maxlength="8">
 							<small class="form-text text-muted">Password will be
 								combination of last 4 digit of mobile number followed by your
-								year of brith. </small> <span id="e_password"></span>
+								year of brith. </small>
+							<small class="form-text text-muted">(Ex:  Mobile: 999912345 D.O.B: dd/mm/1998  Password= 23451998)</small> <span id="e_password"></span>
 						</div>
 						<button type="button" id="changetabbutton1"
 							onclick="checkStatus1()" class="btn btn-primary ">Check Status</button>
@@ -107,6 +110,7 @@
 <script th:src="@{/js/popper.min.js}" crossorigin="anonymous"></script>
 <script th:src="@{/js/bootstrap.min.js}" crossorigin="anonymous"></script>
 <!-- <script th:src="@{/js/input_validation.js}" crossorigin="anonymous"></script> -->
+<script th:src="@{/js/inputmask.js}" crossorigin="anonymous"></script>
 <script th:src="@{/js/status_validation.js}" crossorigin="anonymous"></script>
 <script th:src="@{/js/supporters.js}" crossorigin="anonymous"></script>
 

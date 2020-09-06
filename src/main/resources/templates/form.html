@@ -66,7 +66,7 @@
 
 										<div class="form-group">
 											<label for="exampleInputEmail1">Preference of center
-												*</label> <select class="custom-select" id="poc" name="preOfCenter">
+												</label> <select class="custom-select" id="poc" name="preOfCenter">
 												<option selected>Choose...</option>
 												<option value="Dharwad">Dharwad</option>
 												<option value="Madikeri">Madikeri</option>
@@ -101,14 +101,14 @@
 										<div class="form-group">
 											<label>Gender *</label> <select name="Gender" id="sex"
 												class="custom-select">
-												<option slected value="">Gender</option>
+												<option selected value="">Gender</option>
 												<option value="M">Male</option>
 												<option value="F">Female</option>
 												<option value="T">Transgender</option>
 											</select> <span id="e_sex"></span>
 										</div>
 										<div class="form-group">
-											<label>D.O.B/ಹುಟ್ತಿದ ದಿನ *</label> <input type="date"
+											<label>>D.O.B/ಹುಟ್ಟಿದ ದಿನ *</label> <input type="date"
 												id="dob" name="dob" class="form-control"
 												pattern="yyyy-MM-dd" onchange="ageCal()" min="1960-01-01"
 												max="2005-12-31"> <span id="e_dob"></span>
@@ -136,7 +136,7 @@
 											<span id="e_caste"></span>
 										</div>
 										<div class="form-group">
-											<label>Nationality/ರಾಷ್ಟ್ರೀಯತೆ *</label> <input type="text"
+											<label>Nationality/ರಾಷ್ಟ್ರೀಯತೆ * </label> <input type="text"
 												id="nationality" name="nationality" class="form-control"
 												placeholder="Nationality/ರಾಷ್ಟ್ರೀಯತೆ"> <span
 												id="e_nationality"></span>
@@ -168,7 +168,7 @@
 								<div class="tab-pane fade " id="academic" role="tabpanel"
 									aria-labelledby="academic-tab">
 									<div class="form-group">
-										<h3>SSLC/ಎಸ್ಎಸ್ಎಲ್ಸಿ</h3>
+										<h3>Class 10th/SSLC/ಎಸ್ಎಸ್ಎಲ್ಸಿ</h3>
 									</div>
 									<div class="form-group">
 										<label>Name of Institution/ Board/ University *</label> <input
@@ -238,7 +238,7 @@
 										<h3>Under Graduation/ಪದವಿ</h3>
 									</div>
 									<div class="form-group">
-										<label>Name of Institution/ Board/ University</label> <input
+										<label>Name of Degree</label> <input
 											type="text" id="ug_institution" name="ugInstitution"
 											class="form-control"
 											placeholder="Name of Institution/ Board/ University">
@@ -270,7 +270,7 @@
 										<h3>Post Graduation/ಸ್ನಾತಕೋತ್ತರ ಪದವಿ</h3>
 									</div>
 									<div class="form-group">
-										<label>Name of Institution/ Board/ University</label> <input
+										<label>Name of Degree </label> <input
 											type="text" id="pg_institution" name="pgInstitution"
 											class="form-control"
 											placeholder="Name of Institution/ Board/ University">
@@ -306,11 +306,11 @@
 									aria-labelledby="professional-tab">
 
 									<div class="form-group">
-										<label>Name of Deputy Society/ಡೆಪ್ಯೂಟಿ ಸೊಸೈಟಿಯ ಹೆಸರ*</label> <input
+										<label>Name of Deputing Society/ಡೆಪ್ಯೂಟಿಂಗ್ ಸೊಸೈಟಿಯ ಹೆಸರು* </label> <input
 											type="text" id="deputy_scoiety" name="societyName"
 											class="form-control"
-											placeholder="Name of Deputy Society/ಡೆಪ್ಯೂಟಿ ಸೊಸೈಟಿಯ ಹೆಸರ">
-										<span id="e_deputy_scoiety"></span>
+											placeholder="Name of Deputy Society/ಡೆಪ್ಯೂಟಿ ಸೊಸೈಟಿಯ ಹೆಸರ" >
+										 <span id="e_deputy_scoiety"></span>
 									</div>
 									<div class="form-group">
 										<label>Designation/ಹುದ್ದೆ*</label> <input type="text"
@@ -319,9 +319,10 @@
 											id="e_designation"></span>
 									</div>
 									<div class="form-group">
-										<label> Date of Appointment/ನೇಮಕಾತಿ ದಿನಾಂಕದೆ*</label> <input
+										<label>Date of Appointment/ನೇಮಕಾತಿಯ ದಿನಾಂಕ*   </label>
+										 <input
 											type="date" id="doa" name="doa" class="form-control"
-											pattern="yyyy-MM-dd" 
+											pattern="yyyy-MM-dd" min="1960-01-01" max="2020-12-31"
 											placeholder="Date of Appointment/ನೇಮಕಾತಿ ದಿನಾಂಕ" > <span
 											id="e_doa"></span>
 									</div>
@@ -341,13 +342,13 @@
 
 									</div>
 									<div class="form-group">
-										<label>Office Phone Number/ದೂರವಾಣಿ ಸಂಖ್*</label> <input type="text"
+										<label>Office Phone Number/ದೂರವಾಣಿ ಸಂಖ್ಯೆ* </label> <input type="text"
 											id="phone_number_office" name="societyTelNumber"
 											class="form-control" placeholder="Office Phone Number/ದೂರವಾಣಿ ಸಂಖ್">
 										<span id="e_phone_number_office"></span>
 									</div>
 									<div class="form-group">
-										<label>Office Pincode/ಪಿನ್ಕೋಡ್*</label> <input type="text"
+										<label>Office Pincode/ಪಿನ್ ಕೋಡ್* </label> <input type="text"
 											id="pincode_office" name="societyPincode"
 											class="form-control" placeholder="Office Pincode/ಪಿನ್ಕೋಡ್">
 										<span id="e_pincode_office"></span>
@@ -363,7 +364,7 @@
 									<div class="form-group">
 										<label>Photo*</label> <input type="file" name="photoFile"
 											id="photo" class="form-control" accept="image/x-png,image/gif,image/jpeg"
-											onchange="ValidateSize(this)"> <span id="e_photo"></span>
+											onchange="ValidateImage(this)"> <span id="e_photo"></span>
 									</div>
 									<div class="form-group">
 										<label>Address Proof*</label>
@@ -374,19 +375,19 @@
 										<span id="e_address12"></span>
 									</div>
 									<div class="form-group">
-										<label>Employee Certificate*</label> <input type="file"
+										<label>Service Certificate (Annexure II)*</label> <input type="file"
 											name="certificateFile" id="e_certificate"
 											class="form-control" accept="application/pdf"
 											onchange="ValidateSize(this)"> <span id="e_empolyee"></span>
 									</div>
 									<div class="form-group">
-									<label>NOC Certificate*</label> 
+									<label>NOC Certificate (Annexure I)*</label> 
 									<input type="file" name="nocFile" id="noc_certificate" class="form-control" accept="application/pdf" onchange="ValidateSize(this)"> 
 									<span id="e_noc"></span>
 									</div>
 									<div class="form-group">
 									<label>Signature*</label> 
-									<input type="file" name="signatureFile" id="signature" class="form-control" accept="application/pdf" onchange="ValidateSize(this)"> 
+									<input type="file" name="signatureFile" id="signature" class="form-control" accept="application/pdf" onchange="ValidateImage(this)"> 
 									<span id="e_sig"></span>
 									</div>
 									<button type="button" id="changetabbutton8"

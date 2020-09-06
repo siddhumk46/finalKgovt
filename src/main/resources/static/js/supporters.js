@@ -26,7 +26,6 @@ headerhtml += '					<li class="nav-item"><a class="nav-link" href="/contact">Con
 headerhtml += '							Us</a></li>';
 headerhtml += '				</ul>';
 headerhtml += '			</div>';
-headerhtml += '			<button type="button" id="changetabbutton9" onclick="adminLoginCall();" class="btn btn-success ">Admin Login</button>';
 headerhtml += '		</nav>';
 
 let footerhtml= '';
@@ -38,7 +37,7 @@ footerhtml += '        <div>Designed and Deveploed By: www.apito.in&nbsp&nbsp</d
 footerhtml += '    </div>';
 footerhtml += '</div>';
 
-let righthtml= '<ul><li>Phone no: +91 8892075276,+91 8660193339</li><li>E-mail: apitotechnologies@gmail.com</li></ul>';
+let righthtml= '<ul><li>Phone no: +91 8892075276,+91 8660193339</li><li style="word-break: break-all">E-mail: apitotechnologies@gmail.com</li></ul>';
 
 let lefthtml= '';
 lefthtml += '<ul>';
@@ -59,7 +58,7 @@ warningHtml += '			role="document"> ';
 warningHtml += '			<div class="modal-content"> ';
 warningHtml += '				<div class="modal-header"> ';
 warningHtml += '					<p class="heading" style="padding-left: 10%;"> ';
-warningHtml += '					<h2>WARNING!!!</h2>';
+warningHtml += '					<h2>INFO!!!</h2>';
 warningHtml += '					</p>';
 warningHtml += '					<button type="button" class="close" data-dismiss="modal"';
 warningHtml += '						aria-label="Close">';

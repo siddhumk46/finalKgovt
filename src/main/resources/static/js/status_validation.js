@@ -1,3 +1,17 @@
+
+$('#mobile_number_verify').inputmask('Regex', { 
+    regex: "^[1-9][0-9]{9}$"
+});
+
+
+
+
+
+
+
+
+
+
 $(function() {
 
 	$('#changetabbutton1')
