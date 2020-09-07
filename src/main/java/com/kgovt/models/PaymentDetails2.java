@@ -76,4 +76,7 @@ public class PaymentDetails2 implements Serializable, Cloneable {
 	
 	private String status;
 	
+	@Transient
+	public String preOfCenter;
+	
 }

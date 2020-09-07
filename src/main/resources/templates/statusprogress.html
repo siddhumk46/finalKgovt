@@ -119,18 +119,37 @@
 
 	</div>
 	
+	<!-- Modal successModal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="messageTitle"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <div id="successModalLabel"></div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="successOk">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+	
 	<script th:src="@{/js/jquery-3.5.1.min.js}" crossorigin="anonymous"></script>
 	<script th:src="@{/js/popper.min.js}" crossorigin="anonymous"></script>
 	<script th:src="@{/js/bootstrap.min.js}" crossorigin="anonymous"></script>
+	<script th:src="@{/js/checkout.js}" crossorigin="anonymous"></script>
 	<script th:src="@{/js/input_validation.js}" crossorigin="anonymous"></script>
 	<script th:src="@{/js/status_validation.js}" crossorigin="anonymous"></script>
 	<script th:src="@{/js/supporters.js}" crossorigin="anonymous"></script>
 	<script th:src="@{/js/validation.js}" crossorigin="anonymous"></script>
 	<script th:inline="javascript">
 /*<![CDATA[*/
-	function triggerPayment1() {
-		 window.location.href =  "/makeFirstPayment?applicationNumber="+[[${applicantNo}]];
-	} 
+
 	function triggerPayment2() {
 		 window.location.href =  "/makeSecondPayment?applicationNumber="+[[${applicantNo}]];
 	} 
@@ -160,9 +179,158 @@
 
    /*]]>*/
 </script>
-<script type="text/javascript">
 
+
+<script type="text/javascript">
+    function triggerPayment1() {
+    	successDialog('0','1', function(){
+  		});
+	}
+    
+    function triggerPayment2() {
+    	successDialog('0','2', function(){
+  		});
+	}
+    
+    function successDialog(errorCode, type,  onConfirm){
+ 	    var fClose = function(){
+ 			 modal.modal("hide");
+ 			 if(errorCode == '0' && type == '1') {
+ 				prepareFirstPayement();
+ 			 }else if(errorCode == '0' && type == '2') {
+ 				prepareFirstPayement();
+ 			 }
+ 			 return;
+ 	    };
+ 	    var modal = $("#successModal");
+ 	    modal.modal("show");
+ 	   	if(errorCode == '0') {
+   			$("#messageTitle").html('Important Note!!');
+   			let htmlData = '<span> Processing of your payment can take few minutes </span> </br>';
+   			htmlData += '<span> Please do not hit back button/Page refresh while making Payment </span> </br>';
+   			htmlData += '<span> Please make sure you have proper internet connection and sufficient power/data suppy </span> </br>';
+   			htmlData += '<span> On successful transaction of payment, you will be redirected back. </span> </br>';
+   			htmlData += '<span> Please Press ok to proceed to payment, close otherwise </span> </br>';
+   			$("#successModalLabel").html(htmlData);
+   		}else if(errorCode == '1') {
+   			$("#messageTitle").html('Failed Transaction!!');
+   			$("#successModalLabel").html('Error Occured while making Payment!!! Please contact helpline number(s) for more instruction(s)');
+   		}else if(errorCode == '2') {
+   			$("#messageTitle").html('Failed Transaction!!');
+   			$("#successModalLabel").html('Error Occured while making Payment!!! Please contact helpline number(s) for more instruction(s)');
+   		}else {
+   			$("#messageTitle").html('Failed Transaction!!');
+   			$("#successModalLabel").html('Error Occured while making Payment!!! Please contact helpline number(s) for more instruction(s)');
+   		}
+ 	    $("#successOk").unbind().one('click', onConfirm).one('click', fClose);
+     }
+    
+    function prepareFirstPayement() {
+    	$.ajax({
+				type : 'POST',
+				url : "/pay/makeFirstPayment?applicationNumber="+[[${applicantNo}]],
+				contentType : "application/json; charset=utf-8",
+				data : {},
+				success : function(result) {
+					if(result.ERROR == '0'){
+						let paymentDetails = result.PaymentDetails;
+						makePayment1(paymentDetails);
+					}else{
+						successDialog('',result.ERROR, function(){
+				  		});
+					}
+				}
+			});
+    }
+    
+    function makePayment1(paymentDetails) {
+    	let clbackUrl = "/pay/chargePayment1/"+paymentDetails.applicantNumber+"/";
+    	 var options = {
+    	    "key" : paymentDetails.key,
+    	    "amount":paymentDetails.amount, // Example: 2000 paise = INR 20
+    	    "name" : paymentDetails.preOfCenter,
+    	    "description" : paymentDetails.description,
+    	    "image" : "/img/download.png",
+    	    "order_id" : paymentDetails.orderId,
+			"callback_url" : clbackUrl,
+			"redirect" : true,
+    	    "prefill" : {
+    	    	"name" : paymentDetails.amount, 
+    	    	"email" : paymentDetails.email,
+    	    	"contact" : paymentDetails.mobile
+    	    },
+    	    "notes" : {
+    	    	"address" : paymentDetails.address,
+    	    	"shopping_order_id" : paymentDetails.receiptNo
+    	    },
+    	    "theme" : {
+    	    	"color" : "#15b8f3" // screen color
+    	    },
+    	    "modal": {
+    	    	"ondismiss": function(){
+    	    	     window.location.href = '/viewAppStatus?applicantNumber=' + paymentDetails.applicantNumber';
+    	    	}
+    	    }
+    	};
+    	var propay = new Razorpay(options);
+    	propay.open();
+    	return;
+    }
+    
+    function prepareSecondPayement() {
+    	$.ajax({
+				type : 'POST',
+				url : "/pay/makeSecondPayment?applicationNumber="+[[${applicantNo}]],
+				contentType : "application/json; charset=utf-8",
+				data : {},
+				success : function(result) {
+					if(result.ERROR == '0'){
+						let paymentDetails = result.PaymentDetails;
+						makePayment2(paymentDetails);
+					}else{
+						successDialog('',result.ERROR, function(){
+				  		});
+					}
+				}
+			});
+    }
+    
+    function makePayment2(paymentDetails) {
+    	let clbackUrl = "/pay/chargePayment2/"+paymentDetails.applicantNumber+"/";
+    	 var options = {
+    	    "key" : paymentDetails.key,
+    	    "amount":paymentDetails.amount, // Example: 2000 paise = INR 20
+    	    "name" : paymentDetails.preOfCenter,
+    	    "description" : paymentDetails.description,
+    	    "image" : "/img/download.png",
+    	    "order_id" : paymentDetails.orderId,
+			"callback_url" : clbackUrl,
+			"redirect" : true,
+    	    "prefill" : {
+    	    	"name" : paymentDetails.amount, 
+    	    	"email" : paymentDetails.email,
+    	    	"contact" : paymentDetails.mobile
+    	    },
+    	    "notes" : {
+    	    	"address" : paymentDetails.address,
+    	    	"shopping_order_id" : paymentDetails.receiptNo
+    	    },
+    	    "theme" : {
+    	    	"color" : "#15b8f3" // screen color
+    	    },
+    	    "modal": {
+    	    	"ondismiss": function(){
+    	    	     window.location.href = '/pay/paymentFailure';
+    	    	}
+    	    }
+    	};
+    	var propay = new Razorpay(options);
+    	propay.open();
+    	return;
+    }
+    
 </script>
+
 </body>
 
 </html>

@@ -52,13 +52,7 @@
     			$('#razorpayPaymentId').val(response.razorpay_payment_id);
     			$('#razorpayOrderId').val(response.razorpay_order_id);
     			$('#razorpaySignature').val(response.razorpay_signature);
-    			console.log('response.razorpay_payment_id' + response.razorpay_payment_id)
-    			console.log('response.razorpay_order_id' + response.razorpay_order_id)
-    			console.log('response.razorpay_signature' + response.razorpay_signature)
-    			 $('form').submit();
-    			
-    			
-    			
+    			 $('form').submit();	
     		},
     		"prefill" : {
     			"name" : [[${paymentDetails.amount}]], 
