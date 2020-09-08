@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +24,10 @@ import com.kgovt.datatable.paging.Column;
 import com.kgovt.datatable.paging.Page;
 import com.kgovt.datatable.paging.PagingRequest;
 import com.kgovt.models.ApplicationDetailes;
+import com.kgovt.models.BranchDetails;
 import com.kgovt.models.PaymentDetails;
 import com.kgovt.models.PaymentDetails2;
-import com.kgovt.models.Status;
+import com.kgovt.models.RazorPayObject;
 import com.kgovt.repositories.ApplicationDetailesRepository;
 import com.kgovt.utils.AppConstants;
 import com.kgovt.utils.AppUtilities;
@@ -39,6 +42,12 @@ public class ApplicationDetailesService extends AppConstants {
 
 	@Autowired
 	private ApplicationDetailesRepository applicationDetailesRepository;
+
+	@Autowired
+	BranchDetailsService branchDetailsService;
+
+	@Autowired
+	RazorPayService razorPayService;
 
 	public ApplicationDetailes saveApplicationDetailes(ApplicationDetailes applicationDetailes) {
 		applicationDetailes = applicationDetailesRepository.save(applicationDetailes);
@@ -152,69 +161,132 @@ public class ApplicationDetailesService extends AppConstants {
 		applicationDetailesRepository.deleteByApplicantNumber(applicationNo);
 	}
 
-	public PaymentDetails proceedFirstPayment(PaymentDetails paymentDetails) {
+	public PaymentDetails proceedFirstPayment(ApplicationDetailes applicationDetailes) {
+		log.info("Proceed First Payment Application Number::: " + applicationDetailes.getApplicantNumber());
+		PaymentDetails paymentDetails = new PaymentDetails();
 		try {
-			JSONObject orderRequest = new JSONObject();
-			orderRequest.put("amount", paymentDetails.getAmount()); // amount in the smallest currency unit
-			orderRequest.put("currency", "INR");
-			orderRequest.put("receipt", paymentDetails.getReceiptNo());
-			orderRequest.put("payment_capture", true);
-//			"transfers": [
-//			              {
-//			                "account": "acc_CPRsN1LkFccllA",
-//			                "amount": 1000,
-//			                "currency": "INR",
-//			                "notes": {
-//			                  "branch": "Acme Corp Bangalore North",
-//			                  "name": "Gaurav Kumar"
-//			                },
-//			                "linked_account_notes": [
-//			                  "branch"
-//			                ],
-//			                "on_hold": 1,
-//			                "on_hold_until": 1671222870
-//			              },
-			try {
-				RazorpayClient razorpay = new RazorpayClient(KEY, SECRET);
-				com.razorpay.Order order = razorpay.Orders.create(orderRequest);
-				JSONObject jsonObj = new JSONObject(order.toString());
-				paymentDetails.setOrderId(jsonObj.getString("id"));
-				paymentDetails.setKey(KEY);
-				return paymentDetails;
-			} catch (RazorpayException e) {
-				// TODO Auto-generated catch block
-				log.error("Exeption while saving application", e);
+			paymentDetails.setMobile(applicationDetailes.getMobile());
+			paymentDetails.setEmail(applicationDetailes.getEmail());
+			paymentDetails.setAddress(applicationDetailes.getResAddress());
+			paymentDetails.setReceiptNo(AppUtilities.generateReceptNo(applicationDetailes));
+			paymentDetails.setApplicantNumber(applicationDetailes.getApplicantNumber());
+			paymentDetails.setPreOfCenter(applicationDetailes.getPreOfCenter());
+			List<BranchDetails> branchDetailsList = branchDetailsService.findAll();
+			if(null != branchDetailsList && !branchDetailsList.isEmpty()) {
+				Optional<BranchDetails> branch = branchDetailsList.stream().filter(b -> AppUtilities.isNotNullAndNotEmpty(b.getBranch()) && b.getBranch().equalsIgnoreCase(applicationDetailes.getPreOfCenter()))
+				.findFirst();
+				if (branch.isPresent()) {
+					BranchDetails branchDetails = branch.get();
+					JSONObject orderRequest = new JSONObject();
+					orderRequest.put("amount", Integer.parseInt(branchDetails.getFirstAmount()));
+					paymentDetails.setAmount(Integer.parseInt(branchDetails.getFirstAmount()));
+					orderRequest.put("currency", "INR");
+					orderRequest.put("receipt", paymentDetails.getReceiptNo());
+					orderRequest.put("payment_capture", true);
+					try {
+						// transfer details
+						JSONArray branchTransfers = new JSONArray();
+						JSONObject transfer = new JSONObject();
+						transfer.put("amount", Integer.parseInt(branchDetails.getFirstAmount()));
+						transfer.put("currency", "INR");
+						transfer.put("account", branchDetails.getBranchAccountId());
+						// add notes here
+						JSONObject notes = new JSONObject();
+						notes.put("branch", paymentDetails.getPreOfCenter());
+						notes.put("name", paymentDetails.getApplicantNumber());
+						transfer.put("notes", notes);
+						transfer.put("on_hold", 0);
+						branchTransfers.put(transfer);
+						List<RazorPayObject> list = razorPayService.listRazorDetails();
+						
+						paymentDetails.setDescription(list.get(0).getRazorDescription());
+						paymentDetails.setKey(list.get(0).getAccKey());
+						paymentDetails.setDescription(list.get(0).getRazorDescription());
+						RazorpayClient razorpay = new RazorpayClient(list.get(0).getAccKey(), list.get(0).getAccSecret());
+						com.razorpay.Order order = razorpay.Orders.create(orderRequest);
+						JSONObject jsonObj = new JSONObject(order.toString());
+						paymentDetails.setOrderId(jsonObj.getString("id"));
+						return paymentDetails;
+					} catch (RazorpayException e) {
+						log.error("Error :::: Proceed First Payment::: ", e.getMessage());
+						return null;
+					}
+				}else {
+					log.error("Error :::: Proceed First Payment::: Branch details are not provided");
+					return null;
+				}
+			}else {
+				log.error("Error :::: Proceed First Payment::: Branch details are not provided");
 				return null;
 			}
 		} catch (Exception e) {
-			log.error("Exeption while saving application", e);
-			return null;
+			log.error("Error :::: Proceed First Payment::: ", e.getMessage());
 		}
+		return paymentDetails;
 	}
-	
-	public PaymentDetails2 proceedSecondPayment(PaymentDetails2 paymentDetails) {
+
+	public PaymentDetails2 proceedSecondPayment(ApplicationDetailes applicationDetailes) {
+		log.info("Proceed Second Payment Application Number::: " + applicationDetailes.getApplicantNumber());
+		PaymentDetails2 paymentDetails = new PaymentDetails2();
 		try {
-			JSONObject orderRequest = new JSONObject();
-			orderRequest.put("amount", paymentDetails.getAmount()); // amount in the smallest currency unit
-			orderRequest.put("currency", "INR");
-			orderRequest.put("receipt", paymentDetails.getReceiptNo());
-			orderRequest.put("payment_capture", true);
-			try {
-				RazorpayClient razorpay = new RazorpayClient(KEY, SECRET);
-				com.razorpay.Order order = razorpay.Orders.create(orderRequest);
-				JSONObject jsonObj = new JSONObject(order.toString());
-				paymentDetails.setOrderId(jsonObj.getString("id"));
-				paymentDetails.setKey(KEY);
-				return paymentDetails;
-			} catch (RazorpayException e) {
-				// TODO Auto-generated catch block
-				log.error("Exeption while saving application", e);
+			paymentDetails.setMobile(applicationDetailes.getMobile());
+			paymentDetails.setEmail(applicationDetailes.getEmail());
+			paymentDetails.setAddress(applicationDetailes.getResAddress());
+			paymentDetails.setReceiptNo(AppUtilities.generateReceptNo(applicationDetailes));
+			paymentDetails.setApplicantNumber(applicationDetailes.getApplicantNumber());
+			paymentDetails.setPreOfCenter(applicationDetailes.getPreOfCenter());
+			List<BranchDetails> branchDetailsList = branchDetailsService.findAll();
+			if(null != branchDetailsList && !branchDetailsList.isEmpty()) {
+				Optional<BranchDetails> branch = branchDetailsList.stream().filter(b -> AppUtilities.isNotNullAndNotEmpty(b.getBranch()) && b.getBranch().equalsIgnoreCase(applicationDetailes.getPreOfCenter()))
+				.findFirst();
+				if (branch.isPresent()) {
+					BranchDetails branchDetails = branch.get();
+					JSONObject orderRequest = new JSONObject();
+					orderRequest.put("amount", Integer.parseInt(branchDetails.getSecondAmount()));
+					paymentDetails.setAmount(Integer.parseInt(branchDetails.getSecondAmount()));
+					orderRequest.put("currency", "INR");
+					orderRequest.put("receipt", paymentDetails.getReceiptNo());
+					orderRequest.put("payment_capture", true);
+					try {
+						// transfer details
+						JSONArray branchTransfers = new JSONArray();
+						JSONObject transfer = new JSONObject();
+						transfer.put("amount", Integer.parseInt(branchDetails.getSecondAmount()));
+						transfer.put("currency", "INR");
+						transfer.put("account", branchDetails.getBranchAccountId());
+						// add notes here
+						JSONObject notes = new JSONObject();
+						notes.put("branch", paymentDetails.getPreOfCenter());
+						notes.put("name", paymentDetails.getApplicantNumber());
+						transfer.put("notes", notes);
+						transfer.put("on_hold", 0);
+						branchTransfers.put(transfer);
+						List<RazorPayObject> list = razorPayService.listRazorDetails();
+						
+						paymentDetails.setDescription(list.get(0).getRazorDescription());
+						paymentDetails.setKey(list.get(0).getAccKey());
+						paymentDetails.setDescription(list.get(0).getRazorDescription());
+						RazorpayClient razorpay = new RazorpayClient(list.get(0).getAccKey(), list.get(0).getAccSecret());
+						com.razorpay.Order order = razorpay.Orders.create(orderRequest);
+						JSONObject jsonObj = new JSONObject(order.toString());
+						paymentDetails.setOrderId(jsonObj.getString("id"));
+						return paymentDetails;
+					} catch (RazorpayException e) {
+						log.error("Error :::: Proceed Second Payment::: ", e.getMessage());
+						return null;
+					}
+				}else {
+					log.error("Error :::: Proceed Second Payment::: Branch details are not provided");
+					return null;
+				}
+			}else {
+				log.error("Error :::: Proceed Second Payment::: Branch details are not provided");
 				return null;
 			}
 		} catch (Exception e) {
-			log.error("Exeption while saving application", e);
-			return null;
+			log.error("Error :::: Proceed Second Payment::: ", e.getMessage());
 		}
+		return paymentDetails;
 	}
 
 	private String fileUploadAndReturn(MultipartFile file, String mobile, String fileFoler) {
@@ -228,14 +300,14 @@ public class ApplicationDetailesService extends AppConstants {
 					String rootPath = System.getProperty("/var/apito-s3");
 					// File dir = new File(rootPath + File.separator + "tmpFiles" + File.separator +
 					// mobile+ File.separator + fileFoler);
-					String folder2Store = rootPath + File.separator + "Uploads"+ File.separator+fileFoler + File.separator;
+					String folder2Store = rootPath + File.separator + "Uploads" + File.separator + fileFoler
+							+ File.separator;
 					String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-					String fileName = fileFoler + "_" + mobile+"."+extension;
+					String fileName = fileFoler + "_" + mobile + "." + extension;
 					File dir = new File(folder2Store);
 					if (!dir.exists())
 						dir.mkdirs();
-					
-					
+
 					// Create the file on server
 					File serverFile = new File(dir.getAbsolutePath() + File.separator + fileName);
 					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
@@ -259,12 +331,13 @@ public class ApplicationDetailesService extends AppConstants {
 
 	private static final Comparator<ApplicationDetailes> EMPTY_COMPARATOR = (e1, e2) -> 0;
 
-	public Page<ApplicationDetailes> getApplicationDetailess(PagingRequest pagingRequest,String region, String applicationStatus) {
+	public Page<ApplicationDetailes> getApplicationDetailess(PagingRequest pagingRequest, String region,
+			String applicationStatus) {
 		try {
 			List<ApplicationDetailes> applicationDetailess = new ArrayList<>();
-			if(AppUtilities.isNotNullAndNotEmpty(applicationStatus)) {
+			if (AppUtilities.isNotNullAndNotEmpty(applicationStatus)) {
 				applicationDetailess = applicationDetailesRepository.getByNames(region, applicationStatus);
-			}else {
+			} else {
 				applicationDetailess = applicationDetailesRepository.findByPreOfCenter(region);
 			}
 			return getPage(applicationDetailess, pagingRequest);
@@ -333,6 +406,5 @@ public class ApplicationDetailesService extends AppConstants {
 	public ApplicationDetailes findByMobile(Long mobile) {
 		return applicationDetailesRepository.findByMobile(mobile);
 	}
-	
-	
+
 }
