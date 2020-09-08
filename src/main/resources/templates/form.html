@@ -6,7 +6,7 @@
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" crossorigin="anonymous" >
 <link th:rel="stylesheet" th:href="@{/css/style1.css}" crossorigin="anonymous" />
 <link th:rel="stylesheet" th:href="@{/css/yearpicker.css}" crossorigin="anonymous" />
-<title>Karnataka State co-operative Federation Ltd.</title>
+<title>Karnataka State Co-operative Federation Ltd. Bengaluru</title>
 <link rel="icon" th:href="@{img/logo1.jpg}" type="image/x-icon">
 </head>
 
@@ -100,8 +100,8 @@
 										</div>
 										<div class="form-group">
 											<label>Gender *</label> <select name="Gender" id="sex"
-												class="custom-select">
-												<option selected value="">Gender</option>
+												class="custom-select" placeholder="Gender">
+												<!-- <option selected value="">Gender</option> -->
 												<option value="M">Male</option>
 												<option value="F">Female</option>
 												<option value="T">Transgender</option>
@@ -123,10 +123,11 @@
 												id="religion" name="religion" class="form-control"
 												placeholder="Religion/ಧರ್ಮ"> <span id="e_religion"></span>
 										</div>
+										
 										<div class="form-group">
 											<label>Caste/ಜಾತಿ *</label> <select name="caste" id="caste"
-												class="form-control" onchange="changestatus()">
-												<option selected value="">Cast/ಜಾತಿ</option>
+												class="form-control" onchange="changestatus()" placeholder="Caste">
+											   <!-- <option selected value="">Cast/ಜಾತಿ</option> -->
 												<option value="GM">GM</option>
 												<option value="SC">SC</option>
 												<option value="ST">ST</option>

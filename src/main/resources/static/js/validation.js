@@ -397,7 +397,7 @@ $(function(){
 
        var flag = 0;
 
-       console.log('file '+ file +' '+ file.length);
+   /*    console.log('file '+ file +' '+ file.length);
        
        if( institution == ''){
         document.getElementById('sslc_institution').focus();
@@ -420,7 +420,7 @@ $(function(){
         
         flag = 1;
       }
-         
+          
       else {
     
         document.getElementById('e_sslc_pass').innerHTML = "";
@@ -464,7 +464,7 @@ $(function(){
       else {
         document.getElementById('e_sslc_certificate').innerHTML = "";
 
-      }
+      }*/
       
       
       
