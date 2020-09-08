@@ -41,7 +41,7 @@ $(function(){
 	    }else{
 	      alert('obtained marks cannot be more than total marks.Re-Enter your marks');
 	      
-	       document.getElementById('pucc_marks').value='';
+	       document.getElementById('puc_marks').value='';
 	   document.getElementById('puc_totalmarks').value='';
 	   document.getElementById('puc_marks').focus();
 	    }
@@ -406,11 +406,10 @@ $(function(){
         document.getElementById('e_sslc_institution').style.color = 'red';
         
         flag = 1;
-      }
-      else {
+       }
+       else {
         document.getElementById('e_sslc_institution').innerHTML = "";
-        
-
+       
       }
 
       if( pass == ''){
@@ -421,6 +420,7 @@ $(function(){
         
         flag = 1;
       }
+         
       else {
     
         document.getElementById('e_sslc_pass').innerHTML = "";
@@ -465,7 +465,9 @@ $(function(){
         document.getElementById('e_sslc_certificate').innerHTML = "";
 
       }
-
+      
+      
+      
        if (flag == 0){
         
           $('#mytabs a[href="#professional"]').tab('show');
@@ -830,7 +832,7 @@ function ValidateSize(file) {
 	catch(e){
 	}
     if (FileSize > 1) {
-        alert('File size exceeds 2 MB');
+        alert('File size exceeds 1 MB');
         $(file).val(''); // for clearing with Jquery
        
        console.log('asd');
@@ -890,7 +892,7 @@ function ValidateImage(file) {
 	catch(e){
 	}
     if (FileSize > 1) {
-        alert('File size exceeds 2 MB');
+        alert('File size exceeds 1 MB');
         $(file).val(''); // for clearing with Jquery
        
        console.log('asd');
@@ -908,7 +910,7 @@ function ValidateImage(file) {
           file.value = ''; 
           return false; 
       }   
-	}
+}
 
 function disableEnterKey(e){ 
 	 

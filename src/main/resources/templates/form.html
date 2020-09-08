@@ -108,7 +108,7 @@
 											</select> <span id="e_sex"></span>
 										</div>
 										<div class="form-group">
-											<label>>D.O.B/ಹುಟ್ಟಿದ ದಿನ *</label> <input type="date"
+											<label>D.O.B/ಹುಟ್ಟಿದ ದಿನ *</label> <input type="date"
 												id="dob" name="dob" class="form-control"
 												pattern="yyyy-MM-dd" onchange="ageCal()" min="1960-01-01"
 												max="2005-12-31"> <span id="e_dob"></span>
@@ -216,6 +216,7 @@
 											name="pucPassingYearMonth" id="puc_pass" class="form-control"
 											placeholder="Passing Year">
 									</div>
+									<span id="e_puc_pass"></span>
 									<div class="form-group">
 										<label>Total Marks</label> 
 										<input type="text" id="puc_marks" name="pucMarks" class="marks">
@@ -247,6 +248,7 @@
 										<label>Passing Year</label> <input type="text"
 											name="ugPassingYearMonth" id="ug_pass" class="form-control yearpicker"
 											placeholder="Passing Year">
+											<span id="e_ug_pass"></span>
 									</div>
 									<div class="form-group">
 										<label>Total Marks</label> 
@@ -265,6 +267,7 @@
 											id="ug_certificate" name="ugFile" class="form-control"
 											accept="application/pdf" onchange="ValidateSize(this)">
 										<span id="e_ug_certificate"></span>
+										
 									</div>
 									<div class="form-group">
 										<h3>Post Graduation/ಸ್ನಾತಕೋತ್ತರ ಪದವಿ</h3>
@@ -277,7 +280,8 @@
 									</div>
 									<div class="form-group">
 										<label>Passing Year</label> 
-										<input type="text" name="pgPassingYearMonth" id="ug_year" class="form-control" placeholder="Passing Year">
+										<input type="text" name="pgPassingYearMonth" id="pg_pass" class="form-control" placeholder="Passing Year">
+										<span id="e_pg_pass"></span>
 									</div>
 									<div class="form-group">
 										<label>Total Marks</label> 
@@ -387,7 +391,7 @@
 									</div>
 									<div class="form-group">
 									<label>Signature*</label> 
-									<input type="file" name="signatureFile" id="signature" class="form-control" accept="application/pdf" onchange="ValidateImage(this)"> 
+									<input type="file" name="signatureFile" id="signature" class="form-control" accept="image/x-png,image/gif,image/jpeg" onchange="ValidateImage(this)"> 
 									<span id="e_sig"></span>
 									</div>
 									<button type="button" id="changetabbutton8"
