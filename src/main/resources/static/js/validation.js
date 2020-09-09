@@ -474,6 +474,8 @@ $(function(){
 		  $('#centerContent').scrollTop(0);
        }
     });
+    
+   
 
     $('#doa').click(function(){
 
@@ -506,6 +508,13 @@ $(function(){
 
 
         var date = new Date();
+        
+        if((date.getFullYear() - year_entered ) < 0 || (date.getFullYear() - year_entered ) > 60){
+        
+        	document.getElementById('doa').value='';
+        	document.getElementById('doa').focus();
+        	return; 
+        }
         
         if (month_entered > (date.getMonth() + 1)){
 
@@ -856,6 +865,17 @@ function ValidateSize(file) {
 function ageCal(){
 	  var dob = parseInt(document.getElementById('dob').value.substring(0,4));
 	  var today = new Date();
+	  
+	  
+	  
+	  if((today.getFullYear() - dob ) < 0 || (today.getFullYear() - dob ) > 60){
+        
+        	document.getElementById('dob').value='';
+        	document.getElementById('dob').focus();
+        	document.getElementById('e_dob').value='enter a valid date';
+        	return; 
+        }
+	  
 	  document.getElementById('age').value = today.getFullYear() - dob;
 	}
 
