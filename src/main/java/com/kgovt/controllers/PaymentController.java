@@ -89,10 +89,10 @@ public class PaymentController extends AppConstants {
 		return returnData;
 	}
 	
-	@PostMapping(value = "/chargePayment1/{applicationNumber}/", produces = {
+	@PostMapping(value = "/chargePayment1/{orderId}/{applicationNumber}/", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
 	@ResponseBody
-	public Object chargePayment1(@PathVariable("applicationNumber") Long applicationNumber,
+	public Object chargePayment1(@PathVariable("orderId") String pOrderId,@PathVariable("applicationNumber") Long applicationNumber,
 			@RequestParam Map<String, String> formParams) {
 		log.info("Payment method one started::::::: for Application Number");
 		ApplicationDetailes applicationDetailes = appicationService.findByApplicantNumber(applicationNumber);
@@ -113,7 +113,7 @@ public class PaymentController extends AppConstants {
 						PaymentDetails paymentDetails = new PaymentDetails();
 						paymentDetails.setRazorpayPaymentId(paymentId);
 						paymentDetails.setRazorpayOrderId(orderId);
-						paymentDetails.setOrderId(orderId);
+						paymentDetails.setOrderId(pOrderId);
 						paymentDetails.setRazorpaySignature(razorpaySignature);
 						String ret = paymentDetailsService.savePostPaymentDetails(paymentDetails, applicationDetailes);
 						if(null != ret) {
@@ -178,10 +178,10 @@ public class PaymentController extends AppConstants {
 		return returnData;
 	}
 	
-	@PostMapping(value = "/chargePayment2/{applicationNumber}/", produces = {
+	@PostMapping(value = "/chargePayment2/{orderId}/{applicationNumber}/", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
 	@ResponseBody
-	public Object chargePayment2(@PathVariable("applicationNumber") Long applicationNumber,
+	public Object chargePayment2(@PathVariable("orderId") String pOrderId,@PathVariable("applicationNumber") Long applicationNumber,
 			@RequestParam Map<String, String> formParams) {
 		log.info("Payment method Second started::::::: for Application Number");
 		ApplicationDetailes applicationDetailes = appicationService.findByApplicantNumber(applicationNumber);
@@ -202,7 +202,7 @@ public class PaymentController extends AppConstants {
 						PaymentDetails2 paymentDetails = new PaymentDetails2();
 						paymentDetails.setRazorpayPaymentId(paymentId);
 						paymentDetails.setRazorpayOrderId(orderId);
-						paymentDetails.setOrderId(orderId);
+						paymentDetails.setOrderId(pOrderId);
 						paymentDetails.setRazorpaySignature(razorpaySignature);
 						String ret = paymentDetails2Service.savePostPaymentDetails(paymentDetails, applicationDetailes);
 						if(null != ret) {

@@ -241,7 +241,7 @@
     }
     
     function makePayment1(paymentDetails) {
-    	let clbackUrl = "/pay/chargePayment1/"+paymentDetails.applicantNumber+"/";
+    	let clbackUrl = "/pay/chargePayment1/"+paymentDetails.orderId+"/"+paymentDetails.applicantNumber+"/";
     	 var options = {
     	    "key" : paymentDetails.key,
     	    "amount":paymentDetails.amount, // Example: 2000 paise = INR 20
@@ -293,7 +293,7 @@
     }
     
     function makePayment2(paymentDetails) {
-    	let clbackUrl = "/pay/chargePayment2/"+paymentDetails.applicantNumber+"/";
+    	let clbackUrl = "/pay/chargePayment2/"+paymentDetails.orderId+"/"+paymentDetails.applicantNumber+"/";
     	 var options = {
     	    "key" : paymentDetails.key,
     	    "amount":paymentDetails.amount, // Example: 2000 paise = INR 20
