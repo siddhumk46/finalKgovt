@@ -47,7 +47,7 @@ public class AppicationController extends AppConstants {
 
 	@GetMapping("/")
 	public String getApplicationHome(Model model) {
-		log.info("Hellooooo");
+		
 		return "index";
 	}
 
@@ -58,7 +58,7 @@ public class AppicationController extends AppConstants {
 	
 	@GetMapping("/policy")
 	public String getPolicy(Model model) {
-		return "/policy";
+		return "policy";
 	}
 
 	@PostMapping(value = "/statusprogress", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {MediaType.APPLICATION_JSON_VALUE })

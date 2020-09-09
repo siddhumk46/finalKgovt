@@ -243,12 +243,4 @@ public class PaymentController extends AppConstants {
 	}
 	
 	
-	@PostMapping(value = "/verification", produces = {
-			MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
-	@ResponseBody
-	public void verification(@RequestParam Map<String, String> formParams) {
-		log.info("Web hook verification called");
-		log.info("return data " + formParams.toString());
-	}
-
 }
