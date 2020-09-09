@@ -66,7 +66,7 @@ public class PaymentDetails2Service extends AppConstants{
 			applicationDetailes.setPaymentTwo("Yes");
 			appicationService.saveApplicationDetailes(applicationDetailes);
 		} catch (Exception e) {
-			log.error("Error :::: Proceed second Payment::: ", e.getMessage());
+			log.error("Error :::: Proceed second Payment::: ", e);
 			return null;
 		}
 		return "SUCCESS";

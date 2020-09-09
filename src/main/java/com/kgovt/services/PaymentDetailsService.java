@@ -64,7 +64,7 @@ public class PaymentDetailsService extends AppConstants{
 			appStatus.setAppliedDate(new Date());
 			statusService.saveStatus(appStatus);
 		} catch (Exception e) {
-			log.error("Error :::: Proceed First Payment::: ", e.getMessage());
+			log.error("Error :::: Proceed First Payment::: ", e);
 			return null;
 		}
 		return "SUCCESS";

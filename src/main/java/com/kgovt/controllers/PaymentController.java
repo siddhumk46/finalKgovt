@@ -83,7 +83,7 @@ public class PaymentController extends AppConstants {
 				returnData.put("ERROR", "2");
 			}
 		} catch (Exception e) {
-			log.error("Error making first Payment", e.getMessage());
+			log.error("Error making first Payment", e);
 			returnData.put("ERROR", "3");
 		}
 		return returnData;

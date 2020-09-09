@@ -1,16 +1,11 @@
 package com.kgovt.controllers;
 
-import java.security.SignatureException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.DatatypeConverter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,15 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kgovt.models.AdminUsers;
 import com.kgovt.models.ApplicationDetailes;
-import com.kgovt.models.PaymentDetails;
-import com.kgovt.models.PaymentDetails2;
 import com.kgovt.models.Status;
 import com.kgovt.services.AdminUsersService;
 import com.kgovt.services.ApplicationDetailesService;
-import com.kgovt.services.PaymentDetails2Service;
-import com.kgovt.services.PaymentDetailsService;
 import com.kgovt.services.StatusService;
 import com.kgovt.utils.AppConstants;
 import com.kgovt.utils.AppUtilities;
@@ -57,6 +47,7 @@ public class AppicationController extends AppConstants {
 
 	@GetMapping("/")
 	public String getApplicationHome(Model model) {
+		log.info("Hellooooo");
 		return "index";
 	}
 
