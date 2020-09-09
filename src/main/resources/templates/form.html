@@ -56,7 +56,7 @@
 									role="tabpanel" aria-labelledby="personal-tab">
 									<div id="personDetailId">
 										<div class="form-group">
-											<label>Mobile Number/ಮೊಬೈಲ್ ನಂಬರ *</label> 
+											<label>Mobile Number/ಮೊಬೈಲ್ ನಂಬರ್*</label> 
 												<div class="form-group row">
 													<label class="col-sm-1 col-form-label">+91</label>  
 													<div class="col-sm-11">
@@ -64,7 +64,7 @@
 															<input
 														type="text" id="mobile_number" name="mobile"
 														class="form-control" onchange="validateMobile()"
-														placeholder="Mobile Number/ಮೊಬೈಲ್ ನಂಬರ"  />
+														placeholder="Mobile Number/ಮೊಬೈಲ್ ನಂಬರ್"  />
 													</div>
 														 <small
 														class="form-text text-muted">Register per mobile
@@ -89,7 +89,7 @@
 
 										<div class="form-group">
 											<label for="exampleInputEmail1">Name of the
-												candidate/ಅರ್ಜಿದಾರರ ಹೆಸರು *</label> <input type="text" name="name"
+												candidate/ಅರ್ಜಿದಾರರ ಹೆಸರು*</label> <input type="text" name="name"
 												id="name" class="form-control"
 												placeholder="Name of the candidate/ಅರ್ಜಿದಾರರ ಹೆಸರು" /> <span
 												id="e_name"></span>
@@ -123,7 +123,7 @@
 										</div>
 										<div class="form-group">
 											<label>Age/ವಯಸ್ಸು *</label> <input type="number" id="age"
-												name="age" class="form-control" placeholder="Age/ವಯಸ್"
+												name="age" class="form-control" placeholder="Age/ವಯಸ್ಸು"
 												readonly> <span id="e_age"></span>
 										</div>
 										<div class="form-group">
@@ -177,36 +177,35 @@
 								<div class="tab-pane fade " id="academic" role="tabpanel"
 									aria-labelledby="academic-tab">
 									<div class="form-group">
-										<h3>Class 10th/SSLC/ಎಸ್ಎಸ್ಎಲ್ಸಿ</h3>
+										<h3>Class 10th/SSLC/ಎಸ್.ಎಸ್.ಎಲ್.ಸಿ</h3>
 									</div>
 									<div class="form-group">
-										<label>Name of Institution/ Board/ University *</label> <input
+										<label>Name of Institution/ Board/ University</label> <input
 											type="text" id="sslc_institution" name="sslcInstitution"
 											class="form-control"
 											placeholder="Name of Institution/ Board/ University"
 											autofocus> <span id="e_sslc_institution"></span>
 									</div>
 									<div class="form-group">
-										<label>Passing Year *</label> 
+										<label>Passing Year</label> 
 										<input type="text" name="sslcPassingYearMonth" id="sslc_pass" class="form-control" placeholder="Passing Year">
 										<span id="e_sslc_pass"></span>
 									</div>
 									<div class="form-group">
-										<label>Total Marks *</label>
-										<input type="text" id="sslc_marks" name="sslcMarks" class="marks">
+										<label>Marks</label>
+										<input type="text" id="sslc_marks" name="sslcMarks" class="marks" placeholder="Obtained Marks">
 										<label>/</label>
-										<input type="text" id="sslc_totalmarks"  name="sslcTotalMarks" class="marks">
-										<label>(Obtained/Total)</label>
+										<input type="text" id="sslc_totalmarks"  name="sslcTotalMarks" class="marks" placeholder="Total Marks">									
 										<span id="e_sslc_marks"></span>
 									</div>
 									<div class="form-group">
-										<label>Percentage(%) of Marks *</label> <input type="text"
+										<label>Percentage(%) of Marks</label> <input type="text"
 											id="sslc_percentage" name="sslcPercentage"
 											class="form-control" placeholder="Percentage(%) of Marks" readonly>
 										<span id="e_sslc_percentage"></span>
 									</div>
 									<div class="form-group">
-										<label>Upload MarksCard/Certificate *</label> <input
+										<label>Upload MarksCard/Certificate</label> <input
 											type="file" id="sslc_certificate" name="sslcFile"
 											class="form-control" accept="application/pdf"
 											onchange="ValidateSize(this)"> <span
@@ -227,10 +226,10 @@
 									</div>
 									<span id="e_puc_pass"></span>
 									<div class="form-group">
-										<label>Total Marks</label> 
-										<input type="text" id="puc_marks" name="pucMarks" class="marks">
+										<label>Marks</label> 
+										<input type="text" id="puc_marks" name="pucMarks" class="marks" placeholder="Obtained Marks">
 									<label>/</label>
-									<input type="text" id="puc_totalmarks"  name="pucTotalMarks" class="marks">
+									<input type="text" id="puc_totalmarks"  name="pucTotalMarks" class="marks" placeholder="Total Marks">
 									<label>(Obtained/Total)</label>
 									</div>
 									<div class="form-group">
@@ -260,11 +259,11 @@
 											<span id="e_ug_pass"></span>
 									</div>
 									<div class="form-group">
-										<label>Total Marks</label> 
-										<input type="text" id="ug_marks" name="ugMarks"  class="marks">
+										<label>Marks</label> 
+										<input type="text" id="ug_marks" name="ugMarks"  class="marks" placeholder="Obtained Marks">
 									<label>/</label>
-									<input type="text" id="ug_totalmarks"  name="ugTotalMarks" class="marks">
-									<label>(Obtained/Total)</label>
+									<input type="text" id="ug_totalmarks"  name="ugTotalMarks" class="marks" placeholder="Total Marks">
+									
 									</div>
 									<div class="form-group">
 										<label>Percentage(%) of Marks</label> <input type="text"
@@ -293,11 +292,10 @@
 										<span id="e_pg_pass"></span>
 									</div>
 									<div class="form-group">
-										<label>Total Marks</label> 
-										<input type="text" id="pg_marks" name="pgMarks" class="marks">
+										<label>Marks</label> 
+										<input type="text" id="pg_marks" name="pgMarks" class="marks"  placeholder="Obtained Marks">
 									<label>/</label>
-									<input type="text" id="pg_totalmarks"  name="pgTotalMarks" class="marks">
-									<label>(Obtained/Total)</label>
+									<input type="text" id="pg_totalmarks"  name="pgTotalMarks" class="marks"  placeholder="Total Marks">
 									</div>
 									<div class="form-group">
 										<label>Percentage(%) of Marks</label> <input type="text"
@@ -319,10 +317,10 @@
 									aria-labelledby="professional-tab">
 
 									<div class="form-group">
-										<label>Name of Deputing Society/ನಿಯೋಜಿಸುವ ಸಂಸ್ಥೆಯ ಹೆಸರುು* </label> <input
+										<label>Name of Deputing Society/ನಿಯೋಜಿಸುವ ಸಂಸ್ಥೆಯ ಹೆಸರು* </label> <input
 											type="text" id="deputy_scoiety" name="societyName"
 											class="form-control"
-											placeholder="Name of Deputy Society/ಡೆಪ್ಯೂಟಿ ಸೊಸೈಟಿಯ ಹೆಸರ" >
+											placeholder="Name of Deputy Society/ನಿಯೋಜಿಸುವ ಸಂಸ್ಥೆಯ ಹೆಸರು" >
 										 <span id="e_deputy_scoiety"></span>
 									</div>
 									<div class="form-group">
@@ -348,22 +346,22 @@
 											<span id="e_period_of_service" ></span>
 									</div>
 									<div class="form-group">
-										<label>Office Address/ವಿಳಾಸ*</label>
+										<label>Office Address/ಕಛೇರಿ ವಿಳಾಸ*</label>
 										<textarea id="office_address" name="societAddress" rows="3"
-											placeholder="Office Address/ವಿಳಾಸ" class="form-control"  maxlength="255"></textarea>
+											placeholder="Office Address/ಕಛೇರಿ ವಿಳಾಸ" class="form-control"  maxlength="255"></textarea>
 										<span id="e_office_address"></span>
 
 									</div>
 									<div class="form-group">
-										<label>Office Phone Number/ದೂರವಾಣಿ ಸಂಖ್ಯೆ* </label> <input type="text"
+										<label>Office Phone Number/ಕಛೇರಿ ದೂರವಾಣಿ ಸಂಖ್ಯೆ* </label> <input type="text"
 											id="phone_number_office" name="societyTelNumber"
-											class="form-control" placeholder="Office Phone Number/ದೂರವಾಣಿ ಸಂಖ್">
+											class="form-control" placeholder="Office Phone Number/ಕಛೇರಿ ದೂರವಾಣಿ ಸಂಖ್ಯೆ">
 										<span id="e_phone_number_office"></span>
 									</div>
 									<div class="form-group">
-										<label>Office Pincode/ಪಿನ್ ಕೋಡ್* </label> <input type="text"
+										<label>Office Pincode/ಕಛೇರಿ ಅಂಚೆ* </label> <input type="text"
 											id="pincode_office" name="societyPincode"
-											class="form-control" placeholder="Office Pincode/ಪಿನ್ಕೋಡ್">
+											class="form-control" placeholder="Office Pincode/ಕಛೇರಿ ಅಂಚೆ">
 										<span id="e_pincode_office"></span>
 									</div>
 									<button type="button" id="changetabbutton7"
@@ -379,6 +377,13 @@
 											id="photo" class="form-control" accept="image/x-png,image/gif,image/jpeg"
 											onchange="ValidateImage(this)"> <span id="e_photo"></span>
 									</div>
+									
+									<div class="form-group">
+									<label>Signature*</label> 
+									<input type="file" name="signatureFile" id="signature" class="form-control" accept="image/x-png,image/gif,image/jpeg" onchange="ValidateImage(this)"> 
+									<span id="e_sig"></span>
+									</div>
+									
 									<div class="form-group">
 										<label>Address Proof*</label>
 										<label>(Adhar/DL/VoterId/Passport/Ration Card)</label>
@@ -387,22 +392,20 @@
 											accept="application/pdf" onchange="ValidateSize(this)">
 										<span id="e_address12"></span>
 									</div>
+									
+									<div class="form-group">
+									<label>NOC Certificate (Annexure I)*</label> 
+									<input type="file" name="nocFile" id="noc_certificate" class="form-control" accept="application/pdf" onchange="ValidateSize(this)"> 
+									<span id="e_noc"></span>
+									</div>
+									
 									<div class="form-group">
 										<label>Service Certificate (Annexure II)*</label> <input type="file"
 											name="certificateFile" id="e_certificate"
 											class="form-control" accept="application/pdf"
 											onchange="ValidateSize(this)"> <span id="e_empolyee"></span>
 									</div>
-									<div class="form-group">
-									<label>NOC Certificate (Annexure I)*</label> 
-									<input type="file" name="nocFile" id="noc_certificate" class="form-control" accept="application/pdf" onchange="ValidateSize(this)"> 
-									<span id="e_noc"></span>
-									</div>
-									<div class="form-group">
-									<label>Signature*</label> 
-									<input type="file" name="signatureFile" id="signature" class="form-control" accept="image/x-png,image/gif,image/jpeg" onchange="ValidateImage(this)"> 
-									<span id="e_sig"></span>
-									</div>
+									
 									<button type="button" id="changetabbutton8"
 										class="btn btn-success ">Prev</button>
 									<button type="button" id="changetabbutton4"
