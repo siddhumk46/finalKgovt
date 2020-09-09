@@ -40,19 +40,24 @@ public class PaymentDetails2 implements Serializable, Cloneable {
 	@Column(name = "payment_details_two_id")
 	private Long recordId;
 	
+	@Column(name = "razorpay_payment_id")
 	private String razorpayPaymentId;
-
+	
+	@Column(name = "razorpay_order_id")
 	private String razorpayOrderId;
 
 	@Transient
 	private String razorpaySignature;
 
+	@Column(name = "order_id")
 	private String orderId;
 	
 	private Date createdDate;
 	
+	@Column(name = "receipt_no")
 	private String receiptNo;
 	
+	@Column(name = "applicant_number")
 	private Long applicantNumber;
 	
 	private Integer amount;

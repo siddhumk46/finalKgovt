@@ -87,10 +87,10 @@ public class ApplicationDetailes implements Serializable, Cloneable {
 	public String pgInstitution;
 	
 	@Column(name = "pg_marks_obtained")
-	public String pgMarks;
+	public Integer pgMarks;
 	
 	@Column(name = "pg_marks_total")
-	public String pgTotalMarks;
+	public Integer pgTotalMarks;
 	
 	@Column(name = "pg_passing_year_month")
 	public String pgPassingYearMonth;
@@ -116,7 +116,7 @@ public class ApplicationDetailes implements Serializable, Cloneable {
 	public String pucMarks;
 	
 	@Column(name = "puc_marks_total")
-	public String pucTotalMarks;
+	public Integer pucTotalMarks;
 	
 	@Column(name = "puc_passing_year_month")
 	public String pucPassingYearMonth;
@@ -177,7 +177,7 @@ public class ApplicationDetailes implements Serializable, Cloneable {
 	public String ugInstitution;
 	
 	@Column(name = "ug_marks_obtained")
-	public String ugMarks;
+	public Integer ugMarks;
 	
 	@Column(name = "ug_marks_total")
 	public String ugTotalMarks;
@@ -196,6 +196,15 @@ public class ApplicationDetailes implements Serializable, Cloneable {
 	public Date creationDate;
 	
 	private String other;
+	
+	@Column(name = "noc_file_path")
+	private String nocFilePath;
+	
+	@Column(name = "signature_file_path")
+	private String signatureFilePath;
+	
+	@Column(name = "payment_two")
+	private String paymentTwo = "No"; 
 	
 	@Transient
 	private MultipartFile sslcFile;

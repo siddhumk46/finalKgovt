@@ -111,8 +111,9 @@ public class PaymentController extends AppConstants {
 					boolean isEqual = Utils.verifyPaymentSignature(options, list.get(0).getAccSecret());
 					if (isEqual) {
 						PaymentDetails paymentDetails = new PaymentDetails();
-						paymentDetails.setRazorpayOrderId(paymentId);
+						paymentDetails.setRazorpayPaymentId(paymentId);
 						paymentDetails.setRazorpayOrderId(orderId);
+						paymentDetails.setOrderId(orderId);
 						paymentDetails.setRazorpaySignature(razorpaySignature);
 						String ret = paymentDetailsService.savePostPaymentDetails(paymentDetails, applicationDetailes);
 						if(null != ret) {
@@ -199,8 +200,9 @@ public class PaymentController extends AppConstants {
 					boolean isEqual = Utils.verifyPaymentSignature(options, list.get(0).getAccSecret());
 					if (isEqual) {
 						PaymentDetails2 paymentDetails = new PaymentDetails2();
-						paymentDetails.setRazorpayOrderId(paymentId);
+						paymentDetails.setRazorpayPaymentId(paymentId);
 						paymentDetails.setRazorpayOrderId(orderId);
+						paymentDetails.setOrderId(orderId);
 						paymentDetails.setRazorpaySignature(razorpaySignature);
 						String ret = paymentDetails2Service.savePostPaymentDetails(paymentDetails, applicationDetailes);
 						if(null != ret) {

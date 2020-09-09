@@ -64,6 +64,11 @@ public class AppicationController extends AppConstants {
 	public String getIndex(Model model) {
 		return "index";
 	}
+	
+	@GetMapping("/policy")
+	public String getPolicy(Model model) {
+		return "/policy";
+	}
 
 	@PostMapping(value = "/statusprogress", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
@@ -152,14 +157,18 @@ public class AppicationController extends AppConstants {
 			if (null == applicationDetailes) {
 				model.addAttribute("error",
 						"Ooops Unexpected Error occured while saving Application, Please contact System Administrator !");
+				
 				return "failure";
 			} else {	
 				return "redirect:/viewAppStatus?applicantNumber=" + applicationDetailes.applicantNumber;
 			}
 		} catch (Exception e) {
 			logger.error("Exception while saving aapplication", e);
+			model.addAttribute("error",
+					"Ooops Unexpected Error occured while saving Application, Please contact System Administrator !");
+			return "failure";
 		}
-		return "success";
+		
 	}
 
 	@GetMapping("/viewAppStatus")
@@ -168,7 +177,8 @@ public class AppicationController extends AppConstants {
 			Status newStatus = statusService.findByApplicantNumber(Long.valueOf(applicantNumber));
 			if (null == newStatus) {
 				model.addAttribute("status", null);
-			} else {
+			}else {
+				model.addAttribute("comment", newStatus.getComment());
 				model.addAttribute("status", newStatus.getStatus());
 			}
 			model.addAttribute("applicantNo", applicantNumber);

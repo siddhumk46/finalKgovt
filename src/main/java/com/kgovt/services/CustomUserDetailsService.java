@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		 // first try loading from User table
 		AdminUsers admin = adminUsersRepository.findByRegion(username);
         if (admin != null) {
-            return new CustomUserDetails(admin.getRegion(), admin.getPassword(), admin.getRole());
+            return new CustomUserDetails(admin.getRegion(), admin.getPassword(), admin.getRole(),admin.getRecordId());
         }
         throw new UsernameNotFoundException("User '" + username + "' not found");
 	}

@@ -212,21 +212,21 @@ input::-webkit-inner-spin-button {
 }
 
 .li.complete .status {
-	border-top:  solid #ebd728;
+	border-top:  solid #008000;
 }
 
 .li.complete .timestamp p{
-    color: #ebd728;
+    color:  #008000;
 }
 
 .li.complete .status:before {
-	background-color: #ebd728;
+	background-color:  #008000;
 	border: none;
 	transition: all 200ms ease-in;
 }
 
 .li.complete .status span {
-	color: #ebd728;
+	color: #008000;
 }
 
 /* @media (min-device-width: 320px) and (max-device-width: 700px) {

@@ -260,22 +260,22 @@
 							</div>
 							<div class="form-group">
 								<label>Address Proof: </label> <a
-									th:href="@{|/admin/download?photoFile=${applicationDetailes.photoFileName}|}">Download</a>
+									th:href="@{|/admin/download?photoFile=${applicationDetailes.addressFileName}|}">Download</a>
 								<span id="e_address12"></span>
 							</div>
 							<div class="form-group">
 								<label>Employee Certificate:</label> <a
-									th:href="@{|/admin/download?photoFile=${applicationDetailes.photoFileName}|}">Download</a>
+									th:href="@{|/admin/download?photoFile=${applicationDetailes.serviceCertFileName}|}">Download</a>
 								<span id="e_empolyee"></span>
 							</div>
 							<div class="form-group">
 								<label>NOC Certificate:</label> <a
-									th:href="@{|/admin/download?photoFile=${applicationDetailes.photoFileName}|}">Download</a>
+									th:href="@{|/admin/download?photoFile=${applicationDetailes.nocFilePath}|}">Download</a>
 								<span id="e_noc"></span>
 							</div>
 							<div class="form-group">
 								<label>Signature: </label> <a
-									th:href="@{|/admin/download?photoFile=${applicationDetailes.photoFileName}|}">Download</a>
+									th:href="@{|/admin/download?photoFile=${applicationDetailes.signatureFilePath}|}">Download</a>
 								<span id="e_sig"></span>
 							</div>
 
@@ -395,7 +395,7 @@
      }
       
      function acceptDataAction(type){
-     	let adminId = '1';
+     	let adminId = "1";
      	let applicantNo = [[${applicationDetailes.applicantNumber}]]
      	let comment = $('#comments').val();
      	$.ajax({

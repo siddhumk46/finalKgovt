@@ -41,10 +41,13 @@ public class BranchDetails  implements Serializable, Cloneable{
 	
 	private String branch;
 	
+	@Column(name = "branch_account_id")
 	private String branchAccountId;
 	
-	private String firstAmount;
+	@Column(name = "first_amount")
+	private Integer firstAmount = 0 ;
 	
-	private String secondAmount;
+	@Column(name = "second_amount")
+	private Integer secondAmount =0 ;
 	
 }

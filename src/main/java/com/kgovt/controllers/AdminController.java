@@ -91,13 +91,14 @@ public class AdminController extends AppConstants {
 		try {
 			// update aap details
 			ApplicationDetailes appDetails = appicationService.findByApplicantNumber(applicantNo);
+			AdminUsers admin= adminUsersService.findByRegion(appDetails.getPreOfCenter());
 			appDetails.setApplicationStatus(status);
 			appicationService.saveApplicationDetailes(appDetails);
 			//update status
 			Status stat=statusService.findByApplicantNumber(applicantNo);
 			stat.setStatus(status);
 			stat.setComment(comment);
-			stat.setAdminId(adminId);
+			stat.setAdminId(admin.getRecordId());
 			statusService.saveStatus(stat);			
 		}catch(Exception e) {
 			returnData.put("ERROR", e);
@@ -122,7 +123,7 @@ public class AdminController extends AppConstants {
 		if (AppUtilities.isNotNullAndNotEmpty(photoFile)) {
 			String[] fileNames = photoFile.split("_");
 			String path = fileNames[0];
-			String rootPath = System.getProperty("/var/apito-s3");
+			String rootPath = "/var/apito-s3";
 			String folderStored = rootPath + File.separator +"Uploads"+ File.separator+ path + File.separator + photoFile;
 			 File downloadFile= new File(folderStored); 
 			 //return new FileSystemResource(new File(folderStored));

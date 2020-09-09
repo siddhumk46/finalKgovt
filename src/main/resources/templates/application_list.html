@@ -16,6 +16,8 @@
 
 <body>
 	<div class="container-fluid">
+	<div class="row">
+	<div class="col-md-12">
 		<!--Nav bar-->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-warning orange">
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -33,7 +35,10 @@
 			<span style="text-decoration: underline;cursor:pointer;color:blue" onclick="triggerLogout();">Logout</span>
 			</div>
 		</nav>
-		<div class="container">
+		</div>
+		</div>
+		<div class="row">
+		<div class="col-md-12 custCentDivMD overflow-auto">
 			<table border="0" cellspacing="5" cellpadding="5">
 				<tbody>
 					<tr>
@@ -48,6 +53,7 @@
 					</tr>
 				</tbody>
 			</table>
+			
 			<table id="applicationList" class="table table-bordered table-responsive"
 				style="width: 100%">
 				<thead>
@@ -57,23 +63,15 @@
 						<th>Mobile</th>
 						<th>Name</th>
 						<th>Email</th>
-						<th>Applied</th>
+						<th>Payment</th>
+						<th>Applied On</th>
 					</tr>
 				</thead>
-				<tfoot>
-					<tr>
-						<th>Status</th>
-						<th>Application Number</th>
-						<th>Mobile</th>
-						<th>Name</th>
-						<th>Email</th>
-						<th>Applied</th>
-					</tr>
-				</tfoot>
 			</table>
 		</div>
 	</div>
-
+	</div>
+	
 	<div class="bs-example">
 		<div class="bg-warning d-flex justify-content-between">
 			<div>&nbsp&nbspOwned And Maintained By: Karnataka State
@@ -82,7 +80,7 @@
 		</div>
 	</div>
 	</div>
-
+	
 
 	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -121,7 +119,14 @@
 	            {"data": "mobile","width": "20%"},
 	            {"data": "name", "width": "15%"},
 	            {"data": "email", "width": "10%"},
-	            {"data": "creationDate", "width": "25%"}
+	            {"data": "paymentTwo", "width": "5%"},
+	            {"data": "creationDate", "width": "20%",
+	            	"render": function ( data ) {
+	            		var date = new Date(data);
+	            		var monthArray = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+	            		return date.getDate()+'-'+monthArray[date.getMonth()]+'-'+date.getFullYear();
+	            	    }}
+	            
 	        ]
 	    });
 	}

@@ -19,17 +19,19 @@ public class CustomUserDetails implements UserDetails {
 	private String userName;
 	private String passWord;
 	private Collection<? extends GrantedAuthority> authorities;
+	private Long adminId;
 	
 	public CustomUserDetails() {
         super();
     }
 
-    public CustomUserDetails(String username, String password, String role) {
+    public CustomUserDetails(String username, String password, String role,Long adminId) {
         this.userName = username;
         this.passWord = password;
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(role));
         this.authorities = grantedAuthorities;
+        this.adminId=adminId;
     }
 	
 	@Override
@@ -72,6 +74,14 @@ public class CustomUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public Long getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(Long adminId) {
+		this.adminId = adminId;
 	}
 
 }

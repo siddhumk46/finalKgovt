@@ -127,7 +127,7 @@ public class ApplicationDetailesService extends AppConstants {
 			if (!nocFile.isEmpty()) {
 				String filePath = fileUploadAndReturn(nocFile, String.valueOf(applicationDetailes.getMobile()), "NOC");
 				if (AppUtilities.isNotNullAndNotEmpty(filePath)) {
-					applicationDetailes.setServiceCertFileName(filePath);
+					applicationDetailes.setNocFilePath(filePath);
 				}
 			}
 
@@ -135,7 +135,7 @@ public class ApplicationDetailesService extends AppConstants {
 				String filePath = fileUploadAndReturn(signatureFile, String.valueOf(applicationDetailes.getMobile()),
 						"SIGNATURE");
 				if (AppUtilities.isNotNullAndNotEmpty(filePath)) {
-					applicationDetailes.setServiceCertFileName(filePath);
+					applicationDetailes.setSignatureFilePath(filePath);
 				}
 			}
 
@@ -153,6 +153,7 @@ public class ApplicationDetailesService extends AppConstants {
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("Exeption while saving application", e);
+			return null;
 		}
 		return applicationDetailes;
 	}
@@ -178,8 +179,8 @@ public class ApplicationDetailesService extends AppConstants {
 				if (branch.isPresent()) {
 					BranchDetails branchDetails = branch.get();
 					JSONObject orderRequest = new JSONObject();
-					orderRequest.put("amount", Integer.parseInt(branchDetails.getFirstAmount()));
-					paymentDetails.setAmount(Integer.parseInt(branchDetails.getFirstAmount()));
+					orderRequest.put("amount", branchDetails.getFirstAmount());
+					paymentDetails.setAmount(branchDetails.getFirstAmount());
 					orderRequest.put("currency", "INR");
 					orderRequest.put("receipt", paymentDetails.getReceiptNo());
 					orderRequest.put("payment_capture", true);
@@ -187,7 +188,7 @@ public class ApplicationDetailesService extends AppConstants {
 						// transfer details
 						JSONArray branchTransfers = new JSONArray();
 						JSONObject transfer = new JSONObject();
-						transfer.put("amount", Integer.parseInt(branchDetails.getFirstAmount()));
+						transfer.put("amount", branchDetails.getFirstAmount());
 						transfer.put("currency", "INR");
 						transfer.put("account", branchDetails.getBranchAccountId());
 						// add notes here
@@ -242,8 +243,8 @@ public class ApplicationDetailesService extends AppConstants {
 				if (branch.isPresent()) {
 					BranchDetails branchDetails = branch.get();
 					JSONObject orderRequest = new JSONObject();
-					orderRequest.put("amount", Integer.parseInt(branchDetails.getSecondAmount()));
-					paymentDetails.setAmount(Integer.parseInt(branchDetails.getSecondAmount()));
+					orderRequest.put("amount", branchDetails.getSecondAmount());
+					paymentDetails.setAmount(branchDetails.getSecondAmount());
 					orderRequest.put("currency", "INR");
 					orderRequest.put("receipt", paymentDetails.getReceiptNo());
 					orderRequest.put("payment_capture", true);
@@ -251,7 +252,7 @@ public class ApplicationDetailesService extends AppConstants {
 						// transfer details
 						JSONArray branchTransfers = new JSONArray();
 						JSONObject transfer = new JSONObject();
-						transfer.put("amount", Integer.parseInt(branchDetails.getSecondAmount()));
+						transfer.put("amount", branchDetails.getSecondAmount());
 						transfer.put("currency", "INR");
 						transfer.put("account", branchDetails.getBranchAccountId());
 						// add notes here
@@ -297,7 +298,7 @@ public class ApplicationDetailesService extends AppConstants {
 
 					byte[] bytes = file.getBytes();
 					// Creating the directory to store file
-					String rootPath = System.getProperty("/var/apito-s3");
+					String rootPath = "/var/apito-s3";
 					// File dir = new File(rootPath + File.separator + "tmpFiles" + File.separator +
 					// mobile+ File.separator + fileFoler);
 					String folder2Store = rootPath + File.separator + "Uploads" + File.separator + fileFoler
@@ -338,7 +339,10 @@ public class ApplicationDetailesService extends AppConstants {
 			if (AppUtilities.isNotNullAndNotEmpty(applicationStatus)) {
 				applicationDetailess = applicationDetailesRepository.getByNames(region, applicationStatus);
 			} else {
-				applicationDetailess = applicationDetailesRepository.findByPreOfCenter(region);
+				applicationDetailess = applicationDetailesRepository.getByRegions(region);
+			}
+			if(null == applicationDetailess || applicationDetailess.isEmpty()) {
+				applicationDetailess = new ArrayList<>();
 			}
 			return getPage(applicationDetailess, pagingRequest);
 

@@ -48,7 +48,7 @@
 
 							<li class="li " id="pay1">
 								<div class="timestamp">
-									<p>Payment 1</p>
+									<p>Application Fee</p>
 								</div>
 								<div class="status">
 									<span id="stage2">Pending</span>
@@ -66,7 +66,7 @@
 
 							<li class="li inactive" id="pay2">
 								<div class="timestamp">
-									<p>Payment 2</p>
+									<p>Admission Fee</p>
 
 								</div>
 								<div class="status">
@@ -90,10 +90,7 @@
 						</div>
 
 						<div id="contentRej">
-							<label class="contentLabel">Rejected</label>
-							<!--<button id="verification" class="btn btn-info">Proceed</button>-->
-							<br>
-							<p>Reason for Reject</p>
+							<p id="reasonComment">Reason for Reject</p>
 						</div>
 
 						<div id="content3">
@@ -150,9 +147,6 @@
 	<script th:inline="javascript">
 /*<![CDATA[*/
 
-	function triggerPayment2() {
-		 window.location.href =  "/makeSecondPayment?applicationNumber="+[[${applicantNo}]];
-	} 
 	
 	function initialDisable() {
 		let status=[[${status}]]
@@ -167,6 +161,9 @@
 		{
 			payment1complete();
 			rejectcomplete();
+			let comment=[[${comment}]]
+			$('#reasonComment').html('Reason For Rejection : '+comment);
+			$('#contentRej').show();
 		}
 		else if(status == "C")
 		{
@@ -198,7 +195,7 @@
  			 if(errorCode == '0' && type == '1') {
  				prepareFirstPayement();
  			 }else if(errorCode == '0' && type == '2') {
- 				prepareFirstPayement();
+ 				prepareSecondPayement();
  			 }
  			 return;
  	    };
@@ -268,7 +265,7 @@
     	    },
     	    "modal": {
     	    	"ondismiss": function(){
-    	    	     window.location.href = '/viewAppStatus?applicantNumber=' + paymentDetails.applicantNumber';
+    	    	     window.location.href = '/viewAppStatus?applicantNumber=' + paymentDetails.applicantNumber;
     	    	}
     	    }
     	};
@@ -320,7 +317,7 @@
     	    },
     	    "modal": {
     	    	"ondismiss": function(){
-    	    	     window.location.href = '/pay/paymentFailure';
+    	    		window.location.href = '/viewAppStatus?applicantNumber=' + paymentDetails.applicantNumber;
     	    	}
     	    }
     	};

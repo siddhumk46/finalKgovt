@@ -4,8 +4,8 @@ headerhtml += '<span id="waringId"></span>';
 headerhtml +=' <div class="row">';
 headerhtml += ' <div class="col-md-12 d-none d-sm-none d-md-block headerDiv">';
 headerhtml += '   <img src="/img/logo1.jpg">';
-headerhtml += '   <p class="font-weight-normal" style="font-size:7ch; text-align:center;"> Karnataka State co-operative Federation Ltd.,</p>';
-headerhtml += '   <p style="text-align:center; font-size: medium; color: rgb(121, 171, 236);"> Diploma in Co-operative Management (Distance Education)</p>';
+headerhtml += '   <p class="font-weight-normal" style="font-size:7ch; text-align:center;"> Karnataka State Co-operative Federation Ltd Bangalore.,</p>';
+headerhtml += '   <p style="text-align:center; font-size: 3ch; color: rgb(121, 171, 236);"> Diploma in Co-operative Management (Distance Education)</p>';
 headerhtml += '   </div>';
 headerhtml += ' </div>';
 
@@ -32,7 +32,8 @@ let footerhtml= '';
 footerhtml += '	<hr class="mt-2 mb-3"/> ';
 footerhtml += '  <div class="bs-example">';
 footerhtml += '    <div class="bg-warning d-flex justify-content-between">';
-footerhtml += '        <div>&nbsp&nbspOwned And Maintained By: Karnataka State co-operative Federation Ltd., </div>';
+footerhtml += '        <div>&nbsp&nbspOwned And Maintained By: Karnataka State Co-operative Federation Ltd Bangalore., ';
+footerhtml += '							<a href="/policy">Terms and conditions</a> </div>';
 footerhtml += '        <div>Designed and Deveploed By: www.apito.in&nbsp&nbsp</div>';
 footerhtml += '    </div>';
 footerhtml += '</div>';
@@ -42,9 +43,9 @@ let righthtml= '<ul><li>Phone no: +91 8892075276,+91 8660193339</li><li style="w
 let lefthtml= '';
 lefthtml += '<ul>';
 lefthtml += '	<li><a href="./resource/Noc or Deputing Letter.pdf" rel="nofollow">';
-lefthtml += '			NOC template</a></li>';
+lefthtml += '			NOC Format</a></li>';
 lefthtml += '	<li><a href="./resource/Service Certificate.pdf" rel="nofollow">';
-lefthtml += '			Service Certificate template</a></li>';
+lefthtml += '			Service Certificate Format</a></li>';
 lefthtml += '	<li><a href="/offline">Offline Application Form</a></li>';
 lefthtml += '</ul>';
 
